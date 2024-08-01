@@ -1,0 +1,32 @@
+:root {
+  --sl-font: "Figtree Variable", system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu,
+    Cantarell, Helvetica, Arial, "Helvetica Neue", sans-serif;
+}
+
+.site-title {
+  color: var(--sl-color-white);
+  font-weight: 600;
+  font-size: var(--sl-text-h5);
+  gap: 0.3rem;
+
+  img {
+    height: calc((var(--sl-nav-height) * 0.75) - 2 * var(--sl-nav-pad-y));
+  }
+}
+
+[data-has-hero] header {
+  border-bottom: 1px solid transparent;
+  background-color: transparent;
+  backdrop-filter: blur(20px);
+}
+
+[data-has-hero] .page {
+  --color: #0e93813d;
+  background: linear-gradient(215deg, var(--color), transparent 30%),
+    radial-gradient(var(--color), transparent 40%) no-repeat -60vw -40vh / 105vw
+      300vh;
+}
+
+.card {
+  border-radius: 1rem;
+}

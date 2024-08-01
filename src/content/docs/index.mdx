@@ -1,0 +1,38 @@
+---
+title: Liwan - Lightweight Analytics
+# title: Lightweight Analytics that respects your users
+# description: ""
+template: splash
+hero:
+  tagline: "Currently in development, check back soon for updates!"
+  image:
+    file: ../../assets/favicon.svg
+  actions:
+    # - text: Get started
+    #   link: /getting-started
+    #   icon: right-arrow
+    #   variant: primary
+    - text: View on GitHub
+      link: https://github.com/explodingcamera/liwan
+      icon: external
+---
+
+import { Card, CardGrid } from "@astrojs/starlight/components";
+
+<CardGrid stagger>
+	<Card title="Privacy first" icon="seti:lock">
+		<p>Liwan respects your users' privacy by default. No cookies, no cross-site tracking, no persistent identifiers.</p>
+	</Card>
+	<Card title="A single Binary" icon="rocket">
+		<p>A single, statically linked binary that you can run on your server without any dependencies.</p>
+	</Card>
+	<Card title="Open Source" icon="seti:license">
+		<p>Liwan is open source and licensed under the MIT and Apache 2.0 licenses.</p>
+	</Card>
+	<Card title="Lightweight" icon="seti:rust">
+		<p>Liwan is designed to be lightweight and fast. It's written in Rust and uses SQLite and DuckDB for storage.</p>
+	</Card>
+	<Card title="Less than 1kb" icon="sun">
+		<p>The tracking script is less than 1kb, no need to worry about performance.</p>
+	</Card>
+</CardGrid>
