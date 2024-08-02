@@ -18,8 +18,7 @@ export default defineConfig({
 				src: "./src/assets/favicon.svg",
 			},
 			customCss: ["@fontsource-variable/figtree", "./src/styles/custom.css"],
-			description:
-				"Liwan is a lightweight web analytics tool that respects your users' privacy.",
+			description: "Liwan is a lightweight web analytics tool that respects your users' privacy.",
 			credits: false,
 			social: {
 				github: "https://github.com/explodingcamera/liwan",
