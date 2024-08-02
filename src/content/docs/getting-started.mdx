@@ -1,0 +1,156 @@
+---
+title: Getting Started
+description: Get started with Liwan in a few simple steps.
+---
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+Liwan is a lightweight analytics tool that respects your users' privacy. This guide will help you get started setting up Liwan on your server.
+
+# Quick Start
+
+<Tabs syncKey="docker">
+  <TabItem icon="rocket" label="Binary">
+    
+    To install Liwan, run the following commands:
+
+    <Tabs syncKey="os">
+    <TabItem  label="Linux">
+    ```sh
+    # Download the latest release
+    curl -JLO 'https://example.com/liwan-*.tar.xz'
+    # Extract the binary
+    tar -xJf liwan-*.tar.xz -C /tmp
+    mv /tmp/liwan-*/liwan ~/.local/bin/liwan
+    # Make the binary executable
+    chmod +x ~/.local/bin/liwan
+    ```
+    </TabItem>
+    </Tabs>
+
+    Now, you can either run the binary directly (using `liwan`) or install it as a service so that it starts automatically when your server boots.
+
+    ```sh
+    ./liwan create-service [init-system] # Currently only supports systemd
+    ```
+
+    Liwan will start and bind to port 8080 on localhost. To make Liwan accessible from the internet, you will need to set up a reverse proxy. For more information, see the [Setting up a Reverse Proxy](/guides/reverse-proxy) guide.
+
+  </TabItem>
+  <TabItem icon="seti:docker" label="Docker">
+  
+    To install Liwan using Docker, run the following command:
+
+    ```sh
+    docker run -d --name liwan \
+          # Bind Liwan to port 8080 on localhost
+          # This might be different depending on your setup
+          -p 127.0.0.1:8080:8080
+          # Store the data in a Docker volume
+          -v liwan-data:/liwan-db \
+          # The URL where Liwan will be reachable from
+          -e LIWAN_BASE_URL=https://a.example.com \
+          ghcr.io/explodingcamera/liwan:latest
+    ```
+
+    This will start Liwan and bind it to port 8080 on localhost. To make Liwan accessible from the internet, you will need to set up a reverse proxy. For more information, see the [Setting up a Reverse Proxy](/guides/reverse-proxy) guide.
+
+  </TabItem>
+  <TabItem icon="seti:docker" label="Docker Compose">
+  
+    To download and install Liwan using Docker Compose, create a `docker-compose.yml` file with the following content:
+
+    ```yaml
+    # docker-compose.yml
+    version: '3.8'
+
+    services:
+      liwan:
+        image: ghcr.io/explodingcamera/liwan:latest
+        container_name: liwan
+        ports:
+          - "127.0.0.1:8080:8080"
+        volumes:
+          - liwan-data:/liwan-db
+        # See https://liwan.dev/reference/configuration for all configuration options
+        environment:
+          - LIWAN_BASE_URL=https://a.example.com
+
+    volumes:
+      liwan-data:
+    ```
+
+    Then run the following command:
+
+    ```sh
+    docker compose up -d
+    ```
+
+    This will start Liwan and bind it to port 8080 on localhost. To make Liwan accessible from the internet, you will need to set up a reverse proxy. For more information, see the [Setting up a Reverse Proxy](/guides/reverse-proxy) guide.
+
+  </TabItem>
+  <TabItem icon="seti:docker" label="Docker Compose (with Caddy)">
+  
+    To install Liwan using Docker Compose with Caddy as a reverse proxy, create a `docker-compose.yml` file with the following content:
+    ```yaml
+    # docker-compose.yml
+    version: '3.8'
+
+    services:
+      caddy:
+        image: caddy:latest
+        container_name: caddy
+        ports:
+          - "80:80"
+          - "443:443"
+        networks:
+          - liwan_caddy_network
+        volumes:
+          - ./Caddyfile:/etc/caddy/Caddyfile
+          - caddy_data:/data
+          - caddy_config:/config
+
+      liwan:
+        image: ghcr.io/explodingcamera/liwan:latest
+        container_name: liwan
+        expose:
+          - "8080"
+        networks:
+          - liwan_caddy_network
+        volumes:
+          - liwan-data:/liwan-db
+        # See https://liwan.dev/reference/configuration for all configuration options
+        environment:
+          - LIWAN_BASE_URL=https://a.example.com
+
+    volumes:
+      liwan-data:
+      caddy_data:
+      caddy_config:
+
+    networks:
+      caddy_liwan_network:
+        driver: bridge
+    ```
+
+    And create a `Caddyfile` with the following content:
+
+    ```Caddyfile
+    # Caddyfile
+    a.example.com {
+      reverse_proxy liwan:8080
+      tls you@example.com
+    }
+    ```
+
+    Then run the following command:
+
+    ```sh
+    docker compose up -d
+    ```
+
+    For more information on setting up Caddy, see the [Setting up a Reverse Proxy](/guides/reverse-proxy) guide.
+
+    </TabItem>
+
+</Tabs>
