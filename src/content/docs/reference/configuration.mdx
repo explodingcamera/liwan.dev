@@ -1,0 +1,40 @@
+---
+title: Configuration Reference
+---
+
+Liwan can be configured using a configuration file or environment variables. The configuration file should be named `liwan.config.toml` and should be placed in the same directory as the Liwan binary.
+Alternatively, you can use the `--config` flag to specify the path to the configuration file.
+
+To generate a default configuration file, you can run `liwan generate-config`, which will create a `liwan.config.toml` file in the current directory with the following content:
+
+```toml
+# The base URL of the Liwan instance
+base_url="http://localhost:8080"
+
+# The port to listen on (http)
+port=8080
+
+# Folder to store the database in (Will be created if it doesn't exist)
+db_dir="./liwan-db"
+
+# GeoIp settings (Optional)
+[geoip]
+# maxmind_account_id="MY_ACCOUNT_ID"
+# maxmind_license_key="MY_LICENSE_KEY"
+# maxmind_edition="GeoLite2-City"
+
+# # If you don't want to automatically download the database, you can specify a path to a local file
+# maxmind_db_path="./GeoLite2-City.mmdb"
+```
+
+## Configuration Options
+
+| TOML Key                    | Environment Variable        | Default         |
+| --------------------------- | --------------------------- | --------------- |
+| `base_url`                  | `LIWAN_BASE_URL`            | (none)          |
+| `db_dir`                    | `LIWAN_DB_DIR`              | `./liwan-db`    |
+| `port`                      | `LIWAN_PORT`                | `8080`          |
+| `geoip.maxmind_account_id`  | `LIWAN_MAXMIND_ACCOUNT_ID`  | (none)          |
+| `geoip.maxmind_license_key` | `LIWAN_MAXMIND_LICENSE_KEY` | (none)          |
+| `geoip.maxmind_edition`     | `LIWAN_MAXMIND_EDITION`     | `GeoLite2-City` |
+| `geoip.maxmind_db_path`     | `LIWAN_MAXMIND_DB_PATH`     | (none)          |
