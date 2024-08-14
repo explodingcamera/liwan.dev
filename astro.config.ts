@@ -22,6 +22,10 @@ export default defineConfig({
 			credits: false,
 			social: {
 				github: "https://github.com/explodingcamera/liwan",
+				linkedin: "https://www.linkedin.com/in/henrygressmann/",
+			},
+			components: {
+				Footer: "./src/components/Footer.astro",
 			},
 			sidebar: [
 				{

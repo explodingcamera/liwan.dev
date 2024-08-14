@@ -12,16 +12,36 @@ Liwan is a lightweight analytics tool that respects your users' privacy. This gu
 <Tabs syncKey="docker">
   <TabItem icon="rocket" label="Binary">
     
-    To install Liwan, run the following commands:
+    Liwan is distributed as a single, self-contained binary. You can grab the latest release for your platform
+    from the [GitHub releases page](https://github.com/explodingcamera/liwan/releases/latest).
 
     <Tabs syncKey="os">
     <TabItem  label="Linux">
     ```sh
     # Download the latest release
-    curl -JLO 'https://example.com/liwan-*.tar.xz'
+    curl -JLO 'https://github.com/explodingcamera/liwan/releases/latest/download/liwan-x86_64-unknown-linux-musl.tar.gz'
+
+    # Ensure the ~/.local/bin directory exists (You might need to add it to your PATH)
+    mkdir -p ~/.local/bin
+
     # Extract the binary
-    tar -xJf liwan-*.tar.xz -C /tmp
-    mv /tmp/liwan-*/liwan ~/.local/bin/liwan
+    tar -xzf liwan-x86_64-unknown-linux-musl.tar.gz -C ~/.local/bin liwan
+
+    # Make the binary executable
+    chmod +x ~/.local/bin/liwan
+    ```
+    </TabItem>
+    <TabItem label="macOS">
+     ```sh
+    # Download the latest release
+    curl -JLO 'https://github.com/explodingcamera/liwan/releases/latest/download/liwan-aarch64-apple-darwin.tar.gz'
+
+    # Ensure the ~/.local/bin directory exists (You might need to add it to your PATH)
+    mkdir -p ~/.local/bin
+
+    # Extract the binary
+    tar -xzf liwan-x86_64-unknown-linux-musl.tar.gz -C ~/.local/bin liwan
+
     # Make the binary executable
     chmod +x ~/.local/bin/liwan
     ```
@@ -47,7 +67,7 @@ Liwan is a lightweight analytics tool that respects your users' privacy. This gu
           # This might be different depending on your setup
           -p 127.0.0.1:8080:8080
           # Store the data in a Docker volume
-          -v liwan-data:/liwan-db \
+          -v liwan-data:/liwan-data \
           # The URL where Liwan will be reachable from
           -e LIWAN_BASE_URL=https://a.example.com \
           ghcr.io/explodingcamera/liwan:latest
@@ -71,7 +91,7 @@ Liwan is a lightweight analytics tool that respects your users' privacy. This gu
         ports:
           - "127.0.0.1:8080:8080"
         volumes:
-          - liwan-data:/liwan-db
+          - liwan-data:/liwan-data
         # See https://liwan.dev/reference/configuration for all configuration options
         environment:
           - LIWAN_BASE_URL=https://a.example.com
@@ -118,7 +138,7 @@ Liwan is a lightweight analytics tool that respects your users' privacy. This gu
         networks:
           - liwan_caddy_network
         volumes:
-          - liwan-data:/liwan-db
+          - liwan-data:/liwan-data
         # See https://liwan.dev/reference/configuration for all configuration options
         environment:
           - LIWAN_BASE_URL=https://a.example.com
@@ -133,7 +153,7 @@ Liwan is a lightweight analytics tool that respects your users' privacy. This gu
         driver: bridge
     ```
 
-    And create a `Caddyfile` with the following content:
+    And create a `Caddyfile` that looks something like this:
 
     ```Caddyfile
     # Caddyfile
@@ -154,3 +174,8 @@ Liwan is a lightweight analytics tool that respects your users' privacy. This gu
     </TabItem>
 
 </Tabs>
+
+# Next Steps
+
+Once you've started Liwan, check the logs to find the link to the setup page. Here, you can create your first
+user account and set up your first project and entity to start collecting data.

@@ -2,7 +2,8 @@
 title: Configuration Reference
 ---
 
-Liwan can be configured using a configuration file or environment variables. The configuration file should be named `liwan.config.toml` and should be placed in the same directory as the Liwan binary.
+Liwan can be configured using a configuration file or environment variables. Configuration files are written in [TOML](https://toml.io/en/) format.
+Liwan will look for a configuration file named `liwan.config.toml` in the current directory by default when starting up.
 Alternatively, you can use the `--config` flag to specify the path to the configuration file.
 
 To generate a default configuration file, you can run `liwan generate-config`, which will create a `liwan.config.toml` file in the current directory with the following content:
@@ -15,15 +16,18 @@ base_url="http://localhost:8080"
 port=8080
 
 # Folder to store the database in (Will be created if it doesn't exist)
-db_dir="./liwan-db"
+db_dir="./liwan-data"
 
 # GeoIp settings (Optional)
 [geoip]
+# # MaxMind account ID and license key
+# # Required to automatically download the database and keep it up to date
 # maxmind_account_id="MY_ACCOUNT_ID"
 # maxmind_license_key="MY_LICENSE_KEY"
 # maxmind_edition="GeoLite2-City"
 
 # # If you don't want to automatically download the database, you can specify a path to a local file
+# # Otherwise, the database will be downloaded automatically and stored in the data_dir
 # maxmind_db_path="./GeoLite2-City.mmdb"
 ```
 

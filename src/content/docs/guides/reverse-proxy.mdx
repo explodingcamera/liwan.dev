@@ -5,3 +5,33 @@ title: Setting up a Reverse Proxy
 When exposing Liwan to the public internet, it is recommended to use a reverse proxy to handle SSL termination and other security-related tasks. This guide will show you how to set up a reverse proxy using Caddy.
 
 There are many other reverse proxies available, such as [Nginx](https://nginx.org/) ([guide](https://github.com/nginx-proxy/acme-companion)), [Traefik](https://traefik.io/traefik/) ([guide](https://doc.traefik.io/traefik/getting-started/install-traefik/)), and [HAProxy](https://www.haproxy.org/) ([guide](https://www.haproxy.com/blog/haproxy-and-let-s-encrypt)), which all vary in complexity and features.
+
+## Prerequisites
+
+Before you begin, you will need:
+
+- A domain name pointing to your server's IP address
+- Liwan running on a server accessible from the internet
+
+## Step 1: Install Caddy
+
+First, install Caddy on your server. You can download the latest version from the [official website](https://caddyserver.com/download). Depending on how you install Caddy, you may need to set up a service to run it in the background.
+
+## Step 2: Configure Caddy
+
+A basic Caddy configuration file might look like this:
+
+```Caddyfile
+# Caddyfile
+a.example.com {
+    reverse_proxy liwan:8080
+    tls you@example.com
+}
+```
+
+This configuration tells Caddy to listen for requests on `a.example.com`, reverse proxy them to Liwan running on port `8080`,
+and use Let's Encrypt to automatically obtain and renew SSL certificates.
+
+## Considerations
+
+Depending on your setup, you might want to configure your firewall to only allow incoming traffic on ports `80` and `443` from the internet, as liwan listens on all interfaces by default.

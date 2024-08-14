@@ -1,0 +1,61 @@
+---
+import { Icon } from "@astrojs/starlight/components";
+import type _Footer from "@astrojs/starlight/components/Footer.astro";
+import EditLink from "@astrojs/starlight/components/EditLink.astro";
+import LastUpdated from "@astrojs/starlight/components/LastUpdated.astro";
+import Pagination from "@astrojs/starlight/components/Pagination.astro";
+
+type Props = Parameters<typeof _Footer>[0];
+---
+
+<footer class="sl-flex">
+  <div class="meta sl-flex">
+    <EditLink {...Astro.props} />
+    <LastUpdated {...Astro.props} />
+  </div>
+  <Pagination {...Astro.props} />
+
+  <a
+    class="imprint sl-flex"
+    target="_blank"
+    href="https://henrygressmann.de/impressum"
+  >
+    legal notice/privacy policy
+  </a>
+</footer>
+
+<style>
+  footer {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .meta {
+    gap: 0.75rem 3rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-3);
+  }
+  .meta > :global(p:only-child) {
+    margin-inline-start: auto;
+  }
+
+  .imprint {
+    align-items: center;
+    gap: 0.5em;
+    margin: 1.5rem auto;
+    font-size: var(--sl-text-md);
+    text-decoration: none;
+    color: var(--sl-color-gray-3);
+    &:hover {
+      color: var(--sl-color-white);
+    }
+  }
+  .imprint :global(svg) {
+    color: var(--sl-color-orange);
+  }
+  .kudos:hover {
+    color: var(--sl-color-white);
+  }
+</style>
