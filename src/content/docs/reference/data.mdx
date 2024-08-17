@@ -1,0 +1,38 @@
+---
+title: Collected Data
+---
+
+Liwan is designed to be privacy-friendly and respects the privacy of your visitors.
+It collects only the data that is necessary for generating useful analytics while ensuring that visitors remain anonymous.
+
+## What data does Liwan collect?
+
+Liwan collects the following data:
+
+- **URLs**: The URL of the page that was visited (excluding query parameters and fragments).
+- **Referrers**: The URL of the page that referred the visitor to the current page. Only the domain is stored.
+- **Browser**: The browser used by the visitor (e.g., Chrome, Firefox). The version is not stored.
+- **Operating System**: The operating system used by the visitor (e.g., Windows, macOS). The version is not stored.
+- **Device Type**: The type of device used by the visitor (e.g., desktop, mobile).
+- **Country** (optional): The country of the visitor based on their IP address.
+- **City** (optional): The city of the visitor based on their IP address.
+- **Visitor ID**: An anonymized ID that is unique to each visitor. This is used to track unique visitors across multiple visits.
+
+## What data does Liwan NOT collect?
+
+- **IP Addresses**: Liwan does not store IP addresses. Instead, it uses a hash of the IP address to generate the visitor ID. This ensures that visitors remain anonymous.
+- **Usernames**: Liwan does not collect usernames or any other personally identifiable information.
+- **Cookies**: Liwan does not use cookies to track visitors.
+- **Cross-Site Tracking**: Visitors have a unique visitor ID that is specific to each website. This means that visitors are not tracked across different websites.
+- **Persistent Identifiers**: Visitors are not tracked across multiple days. Each day is treated as a separate session.
+
+## How are Visitors Identified?
+
+Liwan uses a combination of the visitor's IP address and user agent to generate a unique visitor ID.
+This ID is anonymized using a one-way hash function and a unique salt that is rotated daily to ensure that visitors remain anonymous.
+The IP is discarded right after generating the visitor ID and never stored on disk.
+
+```python
+# Psuedocode for generating the visitor ID
+sha3_256(ip, user_agent, daily_salt, entity_id)[0:16]
+```

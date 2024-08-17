@@ -50,9 +50,7 @@ Liwan is a lightweight analytics tool that respects your users' privacy. This gu
 
     Now, you can either run the binary directly (using `liwan`) or install it as a service so that it starts automatically when your server boots.
 
-    ```sh
-    ./liwan create-service [init-system] # Currently only supports systemd
-    ```
+    Depending on your operating system, you can use `systemd`, `launchd`, or `rc.d` to manage the service. For more information, see the [Running Liwan as a Service](/guides/service) guide.
 
     Liwan will start and bind to port 8080 on localhost. To make Liwan accessible from the internet, you will need to set up a reverse proxy. For more information, see the [Setting up a Reverse Proxy](/guides/reverse-proxy) guide.
 
@@ -109,7 +107,7 @@ Liwan is a lightweight analytics tool that respects your users' privacy. This gu
     This will start Liwan and bind it to port 8080 on localhost. To make Liwan accessible from the internet, you will need to set up a reverse proxy. For more information, see the [Setting up a Reverse Proxy](/guides/reverse-proxy) guide.
 
   </TabItem>
-  <TabItem icon="seti:docker" label="Docker Compose (with Caddy)">
+  {/* <TabItem icon="seti:docker" label="Docker Compose (with Caddy)">
   
     To install Liwan using Docker Compose with Caddy as a reverse proxy, create a `docker-compose.yml` file with the following content:
     ```yaml
@@ -171,7 +169,7 @@ Liwan is a lightweight analytics tool that respects your users' privacy. This gu
 
     For more information on setting up Caddy, see the [Setting up a Reverse Proxy](/guides/reverse-proxy) guide.
 
-    </TabItem>
+    </TabItem> */}
 
 </Tabs>
 

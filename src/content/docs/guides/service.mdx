@@ -1,0 +1,58 @@
+---
+title: Running Liwan as a Service
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Liwan can be run as a service on most operating systems. This allows you to start Liwan automatically when your server boots and manage it using the system's service manager.
+
+## Systemd
+
+<Steps>
+
+1. Creating the service
+
+   The most common service manager on Linux is `systemd`. To run Liwan as a service using `systemd`, create a new service file in `/etc/systemd/system/liwan.service` with the following content:
+
+   ```ini
+   # /etc/systemd/system/liwan.service
+   [Unit]
+   Description=Liwan Web Analytics
+   After=network.target
+
+   [Service]
+   # Replace `yourusername` with your username
+   ExecStart=/home/yourusername/.local/bin/liwan --config /home/yourusername/.config/liwan.config.json
+   Restart=on-failure
+   User=yourusername
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+
+   Replace `yourusername` with your username and adjust the paths to match your setup. The `--config` flag specifies the path to the configuration file.
+   To generate a example configuration file, you can run `liwan generate-config`.
+
+2. Starting the service
+
+   After creating the service file, reload the systemd daemon and start the service:
+
+   ```sh
+   # Reload the systemd daemon
+   sudo systemctl daemon-reload
+   # Enable the service to start automatically on boot
+   sudo systemctl enable liwan
+   # Start the service
+   sudo systemctl start liwan
+   ```
+
+3. Checking the status
+
+   You can now check the status of the service using `systemctl status liwan` and view the logs using `journalctl -u liwan`.
+   If this is the first time you are running Liwan, you can find a link to set up your account in the logs.
+
+</Steps>
+
+## Other Systems
+
+For other init systems, the configuration will be somewhat different, but the general idea is the same. Consult your system's documentation for more information.
