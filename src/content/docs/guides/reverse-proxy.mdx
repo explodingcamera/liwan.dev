@@ -28,12 +28,12 @@ Before you begin, you will need:
     ```Caddyfile
     # /etc/caddy/Caddyfile
     liwan.example.com {
-        reverse_proxy liwan:8080
+        reverse_proxy localhost:9042
         tls you@example.com
     }
     ```
 
-    This configuration tells Caddy to listen for requests on `liwan.example.com`, reverse proxy them to Liwan running on port `8080`,
+    This configuration tells Caddy to listen for requests on `liwan.example.com`, reverse proxy them to Liwan running on port `9042`,
     and use Let's Encrypt to automatically obtain and renew SSL certificates.
 
 3.  Start Caddy

@@ -3,21 +3,23 @@ title: Configuration Reference
 ---
 
 Liwan can be configured using a configuration file or environment variables. Configuration files are written in [TOML](https://toml.io/en/) format.
-Liwan will look for a configuration file named `liwan.config.toml` in the current directory by default when starting up.
-Alternatively, you can use the `--config` flag to specify the path to the configuration file.
+Liwan tries to load the configuration file from the current directory (or `~/.config/liwan/liwan.config.toml` on linux/macos) by default.
+Alternatively, you can use the `--config` flag or the `LIWAN_CONFIG` environment variable to specify a path to the configuration file.
 
-To generate a default configuration file, you can run `liwan generate-config`, which will create a `liwan.config.toml` file in the current directory with the following content:
+To generate a default configuration file, you can run `liwan generate-config` (or `liwan generate-config -o OUTPUT_PATH`), which will create a `liwan.config.toml` file in the current directory with the following content:
 
 ```toml
 # liwan.config.toml
 # The base URL of the Liwan instance
-base_url="http://localhost:8080"
+base_url="http://localhost:9042"
 
 # The port to listen on (http)
-port=8080
+port=9042
 
-# Folder to store the database in (Will be created if it doesn't exist)
-db_dir="./liwan-data"
+# # Folder to store the database in (Will be created if it doesn't exist)
+# # defaults to ./.local/share/liwan/data (or $XDG_DATA_HOME/liwan/data) on linux/macos
+# # defaults to ./liwan-data on other platforms
+# data_dir="./liwan-data"
 
 # GeoIp settings (Optional)
 [geoip]
@@ -37,8 +39,8 @@ db_dir="./liwan-data"
 | TOML Key                    | Environment Variable        | Default         |
 | --------------------------- | --------------------------- | --------------- |
 | `base_url`                  | `LIWAN_BASE_URL`            | (none)          |
-| `db_dir`                    | `LIWAN_DB_DIR`              | `./liwan-db`    |
-| `port`                      | `LIWAN_PORT`                | `8080`          |
+| `data_dir`                  | `LIWAN_DATA_DIR`            | `./liwan-data`  |
+| `port`                      | `LIWAN_PORT`                | `9042`          |
 | `geoip.maxmind_account_id`  | `LIWAN_MAXMIND_ACCOUNT_ID`  | (none)          |
 | `geoip.maxmind_license_key` | `LIWAN_MAXMIND_LICENSE_KEY` | (none)          |
 | `geoip.maxmind_edition`     | `LIWAN_MAXMIND_EDITION`     | `GeoLite2-City` |

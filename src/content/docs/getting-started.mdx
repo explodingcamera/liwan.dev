@@ -52,7 +52,7 @@ Liwan is a lightweight analytics tool that respects your users' privacy. This gu
 
     Depending on your operating system, you can use `systemd`, `launchd`, or `rc.d` to manage the service. For more information, see the [Running Liwan as a Service](/guides/service) guide.
 
-    Liwan will start and bind to port 8080 on localhost. To make Liwan accessible from the internet, you will need to set up a reverse proxy. For more information, see the [Setting up a Reverse Proxy](/guides/reverse-proxy) guide.
+    Liwan will start and bind to port 9042 on localhost. To make Liwan accessible from the internet, you will need to set up a reverse proxy. For more information, see the [Setting up a Reverse Proxy](/guides/reverse-proxy) guide.
 
   </TabItem>
   <TabItem icon="seti:docker" label="Docker">
@@ -61,9 +61,9 @@ Liwan is a lightweight analytics tool that respects your users' privacy. This gu
 
     ```sh
     docker run -d --name liwan \
-          # Bind Liwan to port 8080 on localhost
+          # Bind Liwan to port 9042 on localhost
           # This might be different depending on your setup
-          -p 127.0.0.1:8080:8080
+          -p 127.0.0.1:9042:9042
           # Store the data in a Docker volume
           -v liwan-data:/liwan-data \
           # The URL where Liwan will be reachable from
@@ -71,7 +71,7 @@ Liwan is a lightweight analytics tool that respects your users' privacy. This gu
           ghcr.io/explodingcamera/liwan:latest
     ```
 
-    This will start Liwan and bind it to port 8080 on localhost. To make Liwan accessible from the internet, you will need to set up a reverse proxy. For more information, see the [Setting up a Reverse Proxy](/guides/reverse-proxy) guide.
+    This will start Liwan and bind it to port 9042 on localhost. To make Liwan accessible from the internet, you will need to set up a reverse proxy. For more information, see the [Setting up a Reverse Proxy](/guides/reverse-proxy) guide.
 
   </TabItem>
   <TabItem icon="seti:docker" label="Docker Compose">
@@ -87,7 +87,7 @@ Liwan is a lightweight analytics tool that respects your users' privacy. This gu
         image: ghcr.io/explodingcamera/liwan:latest
         container_name: liwan
         ports:
-          - "127.0.0.1:8080:8080"
+          - "127.0.0.1:9042:9042"
         volumes:
           - liwan-data:/liwan-data
         # See https://liwan.dev/reference/configuration for all configuration options
@@ -104,7 +104,7 @@ Liwan is a lightweight analytics tool that respects your users' privacy. This gu
     docker compose up -d
     ```
 
-    This will start Liwan and bind it to port 8080 on localhost. To make Liwan accessible from the internet, you will need to set up a reverse proxy. For more information, see the [Setting up a Reverse Proxy](/guides/reverse-proxy) guide.
+    This will start Liwan and bind it to port 9042 on localhost. To make Liwan accessible from the internet, you will need to set up a reverse proxy. For more information, see the [Setting up a Reverse Proxy](/guides/reverse-proxy) guide.
 
   </TabItem>
   {/* <TabItem icon="seti:docker" label="Docker Compose (with Caddy)">
@@ -132,7 +132,7 @@ Liwan is a lightweight analytics tool that respects your users' privacy. This gu
         image: ghcr.io/explodingcamera/liwan:latest
         container_name: liwan
         expose:
-          - "8080"
+          - "9042"
         networks:
           - liwan_caddy_network
         volumes:
@@ -156,7 +156,7 @@ Liwan is a lightweight analytics tool that respects your users' privacy. This gu
     ```Caddyfile
     # Caddyfile
     a.example.com {
-      reverse_proxy liwan:8080
+      reverse_proxy liwan:9042
       tls you@example.com
     }
     ```
