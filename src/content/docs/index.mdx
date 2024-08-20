@@ -1,9 +1,11 @@
 ---
-title: Liwan - Lightweight Web Analytics
-description: Liwan is a lightweight, privacy-first web analytics tool that respects your users' privacy. No cookies, no cross-site tracking, no persistent identifiers.
+title: Easy & privacy-first web&nbsp;analytics
+description: Liwan is a lightweight, privacy-first web analytics platform that respects your users' privacy. No cookies, no cross-site tracking, no persistent identifiers.
 template: splash
 hero:
-  tagline: Liwan is a lightweight, privacy-first web analytics tool that respects your users' privacy. No cookies, no cross-site tracking, no persistent identifiers.
+  tagline: |
+    Liwan is an <a target="_blank" href="https://github.com/explodingcamera/liwan">open source</a> web analytics platform that respects your users' privacy.
+    A single binary you can run on your server, no cookies, no cross-site tracking, no persistent identifiers.
   image:
     file: ../../assets/favicon.svg
   actions:
@@ -11,10 +13,6 @@ hero:
       link: /getting-started
       icon: right-arrow
       variant: primary
-    - text: View on GitHub
-      link: https://github.com/explodingcamera/liwan
-      icon: external
-      variant: minimal
     - text: Demo
       link: https://demo.liwan.dev
       icon: external
@@ -23,35 +21,41 @@ hero:
 
 import { Card, CardGrid } from "@astrojs/starlight/components";
 
-<CardGrid stagger>
-  <Card title="Privacy first" icon="seti:lock">
+<CardGrid>
+  <Card title="Quick setup">
+    <p>
+      Quickly get started with Liwan with a single, self-contained binary. No
+      database or complex setup required. The tracking script is a single line
+      of code that works with any website.
+    </p>
+  </Card>
+  <Card title="Privacy first">
     <p>
       Liwan respects your users' privacy by default. No cookies, no cross-site
-      tracking, no persistent identifiers.
+      tracking, no persistent identifiers. All data is stored on your server.
     </p>
   </Card>
-  <Card title="A single Binary" icon="rocket">
+  <Card title="Lightweight">
     <p>
-      A single, statically linked binary that you can run on your server without
-      any dependencies.
+      Run liwan on a cheap VPS, your old mac mini, or even a Raspberry Pi.
+      Written in Rust, it's fast, secure, and efficient.
     </p>
   </Card>
-  <Card title="Open Source" icon="seti:license">
+  <Card title="Open Source">
     <p>
-      Liwan is free and open-source software, released under the AGPL-3.0
-      license. You can view and contribute to the source code on GitHub.
+      Fully open source. You can change, extend, and contribute to the codebase.
     </p>
   </Card>
-  <Card title="Lightweight" icon="seti:rust">
+  <Card title="Accurate data">
     <p>
-      Liwan is designed to be lightweight and fast. It's written in Rust and
-      uses SQLite and DuckDB for storage.
+      Get accurate data about your website's visitors, page views, referrers,
+      and more. Liwan detects bots and crawlers and filters them out by default.
     </p>
   </Card>
-  <Card title="Less than 1kb" icon="sun">
+  <Card title="Real-time analytics">
     <p>
-      The tracking script is less than 1kb Gzipped, no need to worry about
-      impacting your site's performance.
+      See your website's traffic in real-time. Liwan updates the dashboard
+      automatically as new visitors come in.
     </p>
   </Card>
 </CardGrid>
