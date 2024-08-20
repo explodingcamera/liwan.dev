@@ -22,6 +22,10 @@
   display: flex;
   margin-top: 3rem;
 
+  .social-icons::after {
+    display: none;
+  }
+
   --sl-icon-color: var(--sl-color-white);
 
   > div {
@@ -35,6 +39,9 @@
 
   @media (max-width: 50rem) {
     margin-top: 0rem;
+    starlight-theme-select {
+      display: none;
+    }
   }
 
   @media (min-width: 0rem) {
@@ -70,6 +77,8 @@
 }
 
 [data-has-hero] .hero {
+  padding-block: clamp(2rem, calc(1rem + 15vmin), 15rem);
+
   h1 {
     font-size: clamp(var(--sl-text-3xl), calc(0.25rem + 5vw), 3rem);
     letter-spacing: -1px;
@@ -101,5 +110,33 @@
   p.title {
     font-weight: 700;
     font-size: clamp(var(--sl-text-sm), calc(0.5rem + 1vw), 1.5rem);
+  }
+}
+
+.hero-images {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 10rem;
+
+  @media (max-width: 40rem) {
+    flex-direction: column;
+    margin-bottom: 4rem;
+
+    img:last-child {
+      display: none;
+    }
+  }
+
+  img.hero-image {
+    border-radius: 1rem;
+    overflow: hidden;
+    flex: 1;
+    margin-top: 0;
+    width: 100%;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+    &:hover {
+      transform: scale(1.03);
+    }
   }
 }

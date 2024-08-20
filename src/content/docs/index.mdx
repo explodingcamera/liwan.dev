@@ -6,8 +6,6 @@ hero:
   tagline: |
     Liwan is an <a target="_blank" href="https://github.com/explodingcamera/liwan">open source</a> web analytics platform that respects your users' privacy.
     A single binary you can run on your server, no cookies, no cross-site tracking, no persistent identifiers.
-  image:
-    file: ../../assets/favicon.svg
   actions:
     - text: Get started
       link: /getting-started
@@ -20,6 +18,14 @@ hero:
 ---
 
 import { Card, CardGrid } from "@astrojs/starlight/components";
+import { Image } from "astro:assets";
+import img from "./../../assets/image.png";
+import img2 from "./../../assets/imagelight.png";
+
+<div className="hero-images">
+  <img className="hero-image" src={img.src} alt="Liwan dashboard" />
+  <img className="hero-image" src={img2.src} alt="Liwan dashboard" />
+</div>
 
 <CardGrid>
   <Card title="Quick setup">
