@@ -29,7 +29,8 @@ Liwan collects the following data:
 ## How are Visitors Identified?
 
 Liwan uses a combination of the visitor's IP address and user agent to generate a unique visitor ID.
-This ID is anonymized using a one-way hash function and a unique salt that is rotated daily to ensure that visitors remain anonymous.
+This ID is pseudonymized using a one-way hash function and a unique salt. The salt is rotated daily to
+ensuring that the IP and user agent combination cannot feasibly be reversed, making users anonymous.
 The IP is discarded right after generating the visitor ID and never stored on disk.
 
 ```python

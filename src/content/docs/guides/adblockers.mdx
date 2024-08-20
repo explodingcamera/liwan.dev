@@ -7,5 +7,6 @@ This can lead to inaccurate data collection, as some users might have adblockers
 
 While it is debatable wether you should try to circumvent this, there are a few things you can do to make it less likely that your users' adblockers block Liwan's tracking script:
 
-- **Subdomain Naming**: Some adblockers block requests to domains that are known to be used for tracking, such as `analytics.example.com`. To avoid this, you can use a subdomain that is less likely to be blocked, such as `a.example.com`.
-- **Bundle the Tracking Script**: Some adblockers block requests to known tracking scripts. To avoid this, you can bundle the tracking script with your website's other assets.
+- **Subdomain Naming**: Some adblockers block requests to domains that are known to be used for tracking, such as `analytics.example.com`.
+  To avoid this, you can use a subdomain that is less likely to be blocked, such as `a.example.com` or `liwan.example.com`.
+- **Bundle the Tracking Script**: Some adblockers block requests to known tracking scripts. To avoid this, you can bundle the tracking script with your website's other assets. This shouldn't be necessary with Liwan, as it is a self-hosted solution and the tracking script is served from your own server.

@@ -8,7 +8,7 @@ Liwan can be run as a service on most operating systems. This allows you to star
 
 <Tabs syncKey="init"><TabItem icon="rocket" label="systemd">
 <Steps>
-1.  Creating the service
+1.  **Creating the service**\
     To run Liwan as a service using `systemd`, create a new service file in `/etc/systemd/system/liwan.service` with the following content:
     ```ini
     # /etc/systemd/system/liwan.service
@@ -29,7 +29,7 @@ Liwan can be run as a service on most operating systems. This allows you to star
     Replace `yourusername` with your username and adjust the paths to match your setup. The `--config` flag specifies the path to the configuration file.
     To generate a example configuration file, you can run `liwan generate-config`.
 
-2.  Starting the service
+2.  **Starting the service**\
     After creating the service file, reload the systemd daemon and start the service:
 
     ```sh
@@ -41,7 +41,7 @@ Liwan can be run as a service on most operating systems. This allows you to star
     sudo systemctl start liwan
     ```
 
-3.  Checking the status
+3.  **Checking the status**\
     You can now check the status of the service using `systemctl status liwan` and view the logs using `journalctl -u liwan`.
     If this is the first time you are running Liwan, you can find a link to set up your account in the logs.
 

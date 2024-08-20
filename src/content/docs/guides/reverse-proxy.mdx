@@ -17,12 +17,10 @@ Before you begin, you will need:
 
 <Steps>
 
-1.  Install Caddy
-
+1.  **Install Caddy**\
     First, install Caddy on your server. You can download the latest version from the [official website](https://caddyserver.com/download). Depending on how you install Caddy, you may need to set up a service to run it in the background.
 
-2.  Configure Caddy
-
+2.  **Configure Caddy**\
     A basic Caddy configuration file might look like this:
 
     ```Caddyfile
@@ -36,8 +34,7 @@ Before you begin, you will need:
     This configuration tells Caddy to listen for requests on `liwan.example.com`, reverse proxy them to Liwan running on port `9042`,
     and use Let's Encrypt to automatically obtain and renew SSL certificates.
 
-3.  Start Caddy
-
+3.  **Start Caddy**\
     Again, depending on your setup, you may need to start Caddy manually or set it up as a service.
     See the [Keep Caddy Running](https://caddyserver.com/docs/running) section of the Caddy documentation for more information.
 

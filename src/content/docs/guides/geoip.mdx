@@ -1,0 +1,39 @@
+---
+title: GeoIP Lookup
+---
+
+Liwan can optionally perform a GeoIP lookup on the visitor's IP address to determine their country and city.
+To enable this feature, you need to provide Liwan with a MaxMind account ID and license key.
+Alternatively, you can specify a path to a local GeoIP database file in the MaxMind DB format (see the [Configuration Reference](/reference/configuration) for more information).
+
+Keep in mind that this will require extra resources and may impact the performance of Liwan, especially on low-end hardware.
+
+## Creating a MaxMind Account
+
+For Country and City lookups, the free offering from MaxMind is sufficient. You can sign up for a free account on the [MaxMind website](https://www.maxmind.com/geoip/signup).
+Once you have created an account, you can go to the [Manage License Keys](https://www.maxmind.com/en/accounts/current/license-key) page to generate a license key and find your account ID.
+
+## Example Configuration
+
+To enable GeoIP lookups, add the following configuration to your `liwan.config.toml` file:
+
+```toml
+# liwan.config.toml
+[geoip]
+maxmind_account_id="MY_ACCOUNT_ID"
+maxmind_license_key="MY_LICENSE_KEY"
+maxmind_edition="GeoLite2-City"
+```
+
+Replace `MY_ACCOUNT_ID` and `MY_LICENSE_KEY` with your MaxMind account ID and license key, respectively.
+
+The next time you start Liwan, it will automatically download the GeoIP database and use it to perform lookups.
+To ensure that the database is kept up to date and accurate, Liwan will periodically check for updates and download the latest version.
+
+If you prefer to use a local GeoIP database file, you can specify the path to the file in the configuration:
+
+```toml
+# liwan.config.toml
+[geoip]
+maxmind_db_path="/path/to/GeoLite2-City.mmdb"
+```
