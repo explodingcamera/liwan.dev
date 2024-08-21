@@ -16,24 +16,28 @@ type Props = Parameters<typeof _Footer>[0];
   <Pagination {...Astro.props} />
 
   <div class="imprint sl-flex">
-    <h2>
-      <Image src="/favicon.svg" alt="Liwan Logo" width="20" height="20" />
-      Liwan - Lightweight Analytics</h2>
-    <a target="_blank" href="mailto:hi@liwan.dev">
-      hi@liwan.dev
-    </a>
+    {(Astro.props.entry.data.template !== "doc") && (
+      <h2>
+        <Image src="/favicon.svg" alt="Liwan Logo" width="20" height="20" />
+        Liwan - Lightweight Analytics</h2>
+      <a target="_blank" href="mailto:hi@liwan.dev">
+        hi@liwan.dev
+      </a>
+    )}
     <a
     target="_blank"
     href="https://henrygressmann.de/impressum"
     >
     legal notice/privacy policy
   </a>
-  <a
-    target="_blank"
-    href="https://henrygressmann.de"
-  >
-    created by Henry Gressmann
-  </a>
+  {(Astro.props.entry.data.template !== "doc") && (
+    <a
+      target="_blank"
+      href="https://henrygressmann.de"
+    >
+      created by Henry Gressmann
+    </a>
+  )}
   </div>
 </footer>
 
