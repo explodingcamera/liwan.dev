@@ -5,6 +5,7 @@ title: Running Liwan as a Service
 import { Steps, Tabs, TabItem } from "@astrojs/starlight/components";
 
 Liwan can be run as a service on most operating systems. This allows you to start Liwan automatically when your server boots and manage it using the system's service manager.
+Systemd is the most common and is used by most modern Linux distributions. Another popular init system is OpenRC, which is used by Gentoo and Alpine Linux.
 
 <Tabs syncKey="init"><TabItem icon="rocket" label="systemd">
 <Steps>
@@ -26,8 +27,8 @@ Liwan can be run as a service on most operating systems. This allows you to star
     WantedBy=multi-user.target
     ```
 
-    Replace `yourusername` with your username and adjust the paths to match your setup. The `--config` flag specifies the path to the configuration file.
-    To generate a example configuration file, you can run `liwan generate-config`.
+    Replace `yourusername` with your username and adjust the paths to match your setup.
+    To generate a configuration file, you can run `liwan generate-config -o ~/.config/liwan/liwan.config.toml`.
 
 2.  **Starting the service**\
     After creating the service file, reload the systemd daemon and start the service:
@@ -45,9 +46,60 @@ Liwan can be run as a service on most operating systems. This allows you to star
     You can now check the status of the service using `systemctl status liwan` and view the logs using `journalctl -u liwan`.
     If this is the first time you are running Liwan, you can find a link to set up your account in the logs.
 
+</Steps></TabItem>
+<TabItem icon="rocket" label="OpenRC">
+<Steps>
+
+1. **Creating the service**\
+   To run Liwan as a service using `OpenRC`, create a new service script in `/etc/init.d/liwan` with the following content:
+
+   ```sh
+    #!/sbin/openrc-run
+
+    name="Liwan"
+    description="Liwan Web Analytics"
+
+    command_user="yourusername"
+    command="/home/${command_user}/.local/bin/liwan"
+    command_background=true
+    pidfile="/run/${RC_SVCNAME}.pid"
+    capabilites="^cap_net_bind_service"
+    output_log="/var/log/liwan/liwan.log"
+    error_log="/var/log/liwan/liwan.err"
+
+    depend() {
+        need net
+        after firewall
+    }
+
+    start_pre() {
+        checkpath --directory --owner $command_user:$command_user --mode 0775 \
+                /run/$RC_SVCNAME /var/log/$RC_SVCNAME
+    }
+   ```
+
+   Replace yourusername with your username and adjust the paths to match your setup. Make sure the script is executable:
+
+   ```sh
+   chmod +x /etc/init.d/liwan
+   ```
+
+   To generate an example configuration file, you can run `liwan generate-config -o ~/.config/liwan/liwan.config.toml`.
+
+2. **Starting the service**\
+   Starting the service
+   After creating the service script, add the service to the default runlevel and start it:
+
+   ```sh
+   # Add the service to the default runlevel
+   rc-update add liwan default
+   # Start the service
+   rc-service liwan start
+   ```
+
+3. **Checking the status**\
+   You can now check the status of the service using `rc-service liwan status` and view the logs using `tail -f /var/log/liwan/liwan.log`.
+   If this is the first time you are running Liwan, you can find a link to set up your account in the logs.
+
 </Steps>
 </TabItem></Tabs>
-
-## Other Systems
-
-For other init systems, the configuration will be somewhat different, but the general idea is the same. Consult your system's documentation for more information.
