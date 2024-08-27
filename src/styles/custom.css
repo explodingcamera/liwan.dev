@@ -3,6 +3,17 @@
     Cantarell, Helvetica, Arial, "Helvetica Neue", sans-serif;
 }
 
+.sl-banner {
+  background-color: var(--sl-color-gray-1);
+}
+
+[data-has-hero] .sl-banner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
 .site-title {
   color: var(--sl-color-white);
   font-weight: 600;
@@ -38,10 +49,14 @@
   }
 
   @media (max-width: 50rem) {
-    margin-top: 0rem;
+    margin-top: 4rem;
     starlight-theme-select {
       display: none;
     }
+  }
+
+  @media (max-width: 25rem) {
+    margin-top: 5rem;
   }
 
   @media (min-width: 0rem) {
