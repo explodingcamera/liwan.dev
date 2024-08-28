@@ -24,12 +24,20 @@ type Props = Parameters<typeof _Footer>[0];
         hi@liwan.dev
       </a>
     )}
-    <a
-    target="_blank"
-    href="https://henrygressmann.de/impressum"
-    >
-    legal notice/privacy policy
-  </a>
+    <div>
+      <a
+      target="_blank"
+      href="https://henrygressmann.de/impressum"
+      >
+        imprint
+      </a>/
+      <a
+      target="_blank"
+      href="https://henrygressmann.de/privacy"
+      >
+        privacy policy
+      </a>
+    </div>
   {(Astro.props.entry.data.template !== "doc") && (
     <a
       target="_blank"
