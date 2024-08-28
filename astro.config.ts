@@ -46,6 +46,10 @@ export default defineConfig({
 					label: "Reference",
 					autogenerate: { directory: "reference" },
 				},
+				{
+					label: "Client Libraries",
+					items: [{ label: "JavaScript/Typescript", link: "https://www.npmjs.com/package/liwan-tracker" }],
+				},
 			],
 		}),
 	],
