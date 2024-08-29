@@ -14,6 +14,25 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: "Liwan",
+			favicon: "/favicon.svg",
+			head: [
+				{
+					tag: "link",
+					attrs: {
+						rel: "icon",
+						href: "/favicon.svg",
+						type: "image/svg+xml",
+					},
+				},
+				{
+					tag: "link",
+					attrs: {
+						rel: "icon",
+						href: "/favicon.ico",
+						sizes: "any",
+					},
+				},
+			],
 			logo: {
 				src: "./src/assets/favicon.svg",
 			},
