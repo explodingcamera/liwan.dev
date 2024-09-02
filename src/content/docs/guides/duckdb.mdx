@@ -1,0 +1,33 @@
+---
+title: Tweaking DuckDB
+description: How to tweak DuckDB for better performance
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+DuckDB, the OLAP database embedded in DuckDB, is designed to be fast and efficient out of the box. However, there are a few settings that can be tweaked to improve performance
+or reduce memory usage. By default, DuckDB is configured to use up to 80% of the available memory on the system and all available CPU cores. This is usually a good default,
+but on resource-constrained systems or in certain workloads, it might be beneficial to change these limits.
+
+## Memory Limit
+
+The memory limit of DuckDB can be set using the `DUCKDB_MEMORY_LIMIT` environment variable or `duckdb.memory_limit` in the configuration file.
+At an absolute minimum, DuckDB requires 128MB of memory per thread to function. For optimal performance, it is recommended to set the memory limit to around 5GB per thread.
+As a rule of thumb, try limiting the amount of threads first before reducing the memory limit.
+
+## Thread Limit
+
+The number of threads DuckDB uses can be set using the `DUCKDB_THREAD_LIMIT` environment variable or `duckdb.thread_limit` in the configuration file.
+By default, DuckDB uses all available CPU cores.
+
+## Disk Usage
+
+For large queries that do not fit in memory, DuckDB can spill intermediate results to disk. In these cases, it's recommended to use
+fast storage with and avoid network storage.
+
+<br />
+
+<Aside>
+  These recommendations are based on [duckdb's performance
+  guide](https://duckdb.org/docs/guides/performance/environment.html)
+</Aside>
