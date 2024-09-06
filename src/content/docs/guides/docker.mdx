@@ -7,7 +7,7 @@ To install Liwan using Docker, run the following command:
 ```sh "127.0.0.1:9042" "https://a.example.com"
 docker run -d --name liwan \
     -p 127.0.0.1:9042:9042 \
-    -v liwan-data:/liwan-data \
+    -v liwan-data:/data \
     -e LIWAN_BASE_URL=https://a.example.com \
     ghcr.io/explodingcamera/liwan:edge
 ```
