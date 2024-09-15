@@ -3,8 +3,17 @@
     Cantarell, Helvetica, Arial, "Helvetica Neue", sans-serif;
 }
 
-.sl-banner {
-  background-color: var(--sl-color-gray-1);
+html[data-theme="dark"] {
+  --sl-color-bg: #0a0c10;
+}
+
+.sl-link-button.primary {
+  border-radius: 0.8rem;
+  font-size: 1.1rem;
+  position: relative;
+  border: none;
+  border-radius: 0.9rem;
+  background-color: var(--sl-color-white);
 }
 
 [data-has-hero] .sl-banner {
@@ -79,10 +88,10 @@
 }
 
 [data-has-hero] .page {
-  --color: #0e93813d;
+  /* --color: #0e93813d;
   background: linear-gradient(215deg, var(--color), transparent 30%),
     radial-gradient(var(--color), transparent 40%) no-repeat -60vw -40vh / 105vw
-      300vh;
+      300vh; */
 
   --sl-content-pad-x: 3rem;
 
