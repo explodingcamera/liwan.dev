@@ -8,7 +8,16 @@ When exposing Liwan to the public internet, it is recommended to use a reverse p
 
 There are many other reverse proxies available, such as [Nginx](https://nginx.org/) ([guide](https://github.com/nginx-proxy/acme-companion)), [Traefik](https://traefik.io/traefik/) ([guide](https://doc.traefik.io/traefik/getting-started/install-traefik/)), and [HAProxy](https://www.haproxy.org/) ([guide](https://www.haproxy.com/blog/haproxy-and-let-s-encrypt)), which all vary in complexity and features.
 
+
 ## Setting up Caddy
+
+<Aside type="caution" title="Firewall Configuration">
+  Depending on your setup, you might want to configure your firewall to only
+  allow incoming traffic on ports `80` and `443` from the internet, as liwan
+  listens on all interfaces by default. A simple way to do this on many Linux
+  distributions is using `ufw`, check the [official
+  documentation](https://help.ubuntu.com/community/UFW) for more information.
+</Aside>
 
 <Steps>
 
@@ -39,10 +48,3 @@ There are many other reverse proxies available, such as [Nginx](https://nginx.or
 
 <br />
 
-<Aside type="caution" title="Firewall Configuration">
-  Depending on your setup, you might want to configure your firewall to only
-  allow incoming traffic on ports `80` and `443` from the internet, as liwan
-  listens on all interfaces by default. A simple way to do this on many Linux
-  distributions is using `ufw`, check the [official
-  documentation](https://help.ubuntu.com/community/UFW) for more information.
-</Aside>

@@ -5,6 +5,12 @@ description: How to tweak DuckDB for better performance
 
 import { Aside } from "@astrojs/starlight/components";
 
+<Aside>
+  These recommendations are based on [duckdb's performance
+  guide](https://duckdb.org/docs/guides/performance/environment.html)
+</Aside>
+
+
 DuckDB, the OLAP database embedded in DuckDB, is designed to be fast and efficient out of the box. However, there are a few settings that can be tweaked to improve performance
 or reduce memory usage. By default, DuckDB is configured to use up to 80% of the available memory on the system and all available CPU cores. This is usually a good default,
 but on resource-constrained systems or in certain workloads, it might be beneficial to change these limits.
@@ -27,7 +33,3 @@ fast storage with and avoid network storage.
 
 <br />
 
-<Aside>
-  These recommendations are based on [duckdb's performance
-  guide](https://duckdb.org/docs/guides/performance/environment.html)
-</Aside>

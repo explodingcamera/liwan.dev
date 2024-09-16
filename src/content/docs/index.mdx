@@ -19,12 +19,16 @@ hero:
 
 import { Card, CardGrid } from "@astrojs/starlight/components";
 import { Image } from "astro:assets";
-import img from "./../../assets/image.png";
-import img2 from "./../../assets/imagelight.png";
+import img from "./../../assets/images/liwan-desktop-dark.png";
+import img2 from "./../../assets/images/liwan-desktop.png";
 
 <div className="hero-images">
-  <img className="hero-image" src={img.src} alt="Liwan dashboard" />
-  <img className="hero-image" src={img2.src} alt="Liwan dashboard" />
+  <a href="https://demo.liwan.dev/p/liwan.dev">
+    <img className="hero-image" src={img.src} alt="Liwan dashboard" />
+  </a>
+  <a href="https://demo.liwan.dev/p/liwan.dev">
+    <img className="hero-image" src={img2.src} alt="Liwan dashboard" />
+  </a>
 </div>
 
 <CardGrid>
@@ -32,14 +36,14 @@ import img2 from "./../../assets/imagelight.png";
     <p>
       Quickly get started with Liwan with a <b>single, self-contained binary</b>
       . No database or complex setup required. The tracking script is a single
-      line of code that works with any website and less than 1KB in size.
+      line of code that works with any website and adds less than 1KB to your page size.
     </p>
   </Card>
   <Card title="Privacy first">
     <p>
       Liwan respects your users' privacy by default. No cookies, no cross-site
       tracking, no persistent identifiers.{" "}
-      <b>All data is stored on your server.</b>
+      <b>All data is stored on your server.</b> See [what data Liwan collects](/reference/data).
     </p>
   </Card>
   <Card title="Lightweight">

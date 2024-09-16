@@ -1,0 +1,45 @@
+---
+title: Installing Liwan using Docker Compose
+---
+
+To download and install Liwan using Docker Compose, create a `docker-compose.yml` file with the following content:
+
+```yaml
+# docker-compose.yml
+version: "3.8"
+
+services:
+  liwan:
+    image: ghcr.io/explodingcamera/liwan:edge
+    container_name: liwan
+    ports:
+        - "127.0.0.1:9042:9042"
+    volumes:
+        - liwan-data:/data
+    # See https://liwan.dev/reference/configuration for all configuration options
+    environment:
+        - LIWAN_BASE_URL=https://a.example.com
+
+volumes:
+  liwan-data:
+```
+
+Then run the following command:
+
+```sh
+docker compose up -d
+```
+
+This will start Liwan and bind it to port 9042 on localhost. To make Liwan accessible from the internet, you will need to set up a reverse proxy. For more information, see the [Setting up a Reverse Proxy](/guides/reverse-proxy) guide.
+
+To view the logs (and find the setup URL), you can run:
+
+```bash title="liwan"
+docker compose logs liwan
+```
+
+```plaintext "http://localhost:904
+It looks like you're running Liwan for the first time!
+You can get started by visiting: http://localhost:9042/setup?t=1234567890
+To see all available commands, run `liwan --help`
+```

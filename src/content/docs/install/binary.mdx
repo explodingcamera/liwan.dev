@@ -1,0 +1,114 @@
+---
+title: Single Binary
+---
+
+import { Steps, Tabs, TabItem } from "@astrojs/starlight/components";
+
+Installing Liwan using the single binary is the easiest way to get started.
+The binary is a self-contained executable that you can run on your server without any additional dependencies.
+
+Currently, Liwan provides pre-built binaries for **Linux (x86_64/ARM64)** and **macOS (ARM64)**. The binary is statically linked using musl libc, so it should work on most (if not all) Linux distributions.
+
+### Installation
+
+<Steps>
+  <ol>
+    <li>
+      **Dowload & Extract the Binary**\
+      You can change the installation directory by replacing
+      `~/.local/bin` with your desired path.
+
+      <Tabs syncKey="os">
+        <TabItem  label="Linux (X86_64)">
+
+        ```sh
+        # Download the latest release
+        curl -JLO 'https://github.com/explodingcamera/liwan/releases/latest/download/liwan-x86_64-unknown-linux-musl.tar.gz'
+
+        # Ensure the ~/.local/bin directory exists (You might want to add it to your PATH)
+        mkdir -p ~/.local/bin
+
+        # Extract the binary
+        tar -xzf liwan-x86_64-unknown-linux-musl.tar.gz -C ~/.local/bin liwan
+
+        # Make the binary executable
+        chmod +x ~/.local/bin/liwan
+
+        # Run the binary
+        liwan --help
+        ```
+
+        </TabItem>
+        <TabItem label="Linux (ARM)">
+
+            ```sh
+            # Download the latest release
+            curl -JLO 'https://github.com/explodingcamera/liwan/releases/latest/download/liwan-aarch64-unknown-linux-musl.tar.gz'
+
+            # Ensure the ~/.local/bin directory exists (You might need to add it to your PATH)
+            mkdir -p ~/.local/bin
+
+            # Extract the binary
+            tar -xzf liwan-aarch64-unknown-linux-musl.tar.gz -C ~/.local/bin liwan
+
+            # Make the binary executable
+            chmod +x ~/.local/bin/liwan
+
+            # Run the binary
+            liwan --help
+            ```
+
+         </TabItem>
+         <TabItem label="macOS (ARM)">
+
+            ```sh
+            # Download the latest release
+            curl -JLO 'https://github.com/explodingcamera/liwan/releases/latest/download/liwan-aarch64-apple-darwin.tar.gz'
+
+            # Ensure the ~/.local/bin directory exists (You might need to add it to your PATH)
+            mkdir -p ~/.local/bin
+
+            # Extract the binary
+            tar -xzf liwan-aarch64-apple-darwin.tar.gz -C ~/.local/bin liwan
+
+            # Make the binary executable
+            chmod +x ~/.local/bin/liwan
+
+            # Run the binary
+            liwan --help
+            ```
+        </TabItem>
+      </Tabs>
+
+      The binary is now installed in `~/.local/bin/liwan`. To run the binary from any directory, you might want to add `~/.local/bin` to your PATH.
+
+      ```sh
+      # add this to your .bashrc or .zshrc
+      export PATH=$PATH:~/.local/bin
+      ```
+    </li>
+    <li>
+      **Run the Binary**\
+      You can run the binary directly or install it as a service.
+
+      ```sh
+      liwan
+      ```
+
+      The first time you run Liwan, it will generate a setup URL. Visit this URL to create your first user account and set up your first project and entity to start collecting data.
+
+      ```plaintext "http://localhost:9042/setup?t=1234567890" "liwan --help"
+      It looks like you're running Liwan for the first time!
+      You can get started by visiting: http://localhost:9042/setup?t=1234567890
+      To see all available commands, run `liwan --help`
+      ```
+    </li>
+
+    <li>
+        **Creating a service to automatically start Liwan (Optional)**
+
+        See the [Running Liwan as a Service](/guides/service) guide for instructions on how to create a service to automatically start Liwan when your server boots.
+    </li>
+
+  </ol>
+</Steps>

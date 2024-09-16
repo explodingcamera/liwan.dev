@@ -1,5 +1,5 @@
 :root {
-  --sl-content-width: 60rem;
+  --sl-content-width: 50rem;
   --sl-font: "Figtree Variable", system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu,
     Cantarell, Helvetica, Arial, "Helvetica Neue", sans-serif;
 }
@@ -7,6 +7,10 @@
 .expressive-code {
   --ec-brdRad: 10px;
   --ec-brdWd: 0px;
+}
+
+.pagination-links {
+  --sl-shadow-md: none;
 }
 
 :root[data-theme="light"] {
@@ -83,15 +87,15 @@ h2 {
     display: none;
   }
 
+  @media (max-width: 80rem) {
+    margin-top: 0.5rem;
+    padding: 1rem 2rem;
+  }
+
   @media (max-width: 50rem) {
-    margin-top: 4rem;
     starlight-theme-select {
       display: none;
     }
-  }
-
-  @media (max-width: 25rem) {
-    margin-top: 5rem;
   }
 
   @media (min-width: 0rem) {
@@ -208,6 +212,10 @@ h2 {
   border: none;
 }
 
+.content-panel {
+  padding-bottom: 0;
+}
+
 .sidebar-content {
   background-color: var(--sl-color-bg);
 }
@@ -215,4 +223,10 @@ h2 {
 header.header {
   background: transparent;
   backdrop-filter: blur(10px);
+}
+
+article.card {
+  background: var(--sl-color-bg-nav);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
 }

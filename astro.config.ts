@@ -41,12 +41,23 @@ const starlightConfig = starlight({
 	},
 	sidebar: [
 		{
-			label: "Start Here",
+			label: "Getting Started",
+			slug: "getting-started",
+		},
+		{
+			label: "Installation",
 			items: [
-				{ label: "Getting Started", slug: "getting-started" },
 				{
-					label: "Adding your first Website",
-					slug: "adding-your-first-website",
+					label: "Single Binary",
+					slug: "install/binary",
+				},
+				{
+					label: "Docker",
+					slug: "install/docker",
+				},
+				{
+					label: "Docker Compose",
+					slug: "install/docker-compose",
 				},
 			],
 		},

@@ -1,20 +1,32 @@
 ---
-title: Adding your first website
+title: Projects and Entities
 ---
+
+import { Card } from "@astrojs/starlight/components";
 
 Similarity to Google Analytics' "Account" and "Property" structure, Liwan uses the concept of "Projects" and "Entities" to organize your data.
 
-## Projects
+<Card title="Projects">
 
-Projects are the top-level container for your data. You can think of them as a collection of websites or applications that you want to track. These are used to group your data and manage access control.
-Depending on your use case, you might have a project for each of your websites, or one grouping together a website and its mobile app.
+Projects are the top-level container for your data. You can think of them as a
+collection of websites or applications that you want to track. These are used
+to group your data in the dashboard and to manage access control.
 
-## Entities
+Depending on your use case, you might have a project for each of your websites, or one grouping together a
+website and its mobile app.
+
+</Card>
+
+<Card title="Entities">
 
 Entities are the individual websites or applications that you want to track. These store the actual data and are what you will define your tracking code for.
-Entities can be associated with multiple projects, allowing you to share data between projects if needed (e.g., creating a public project for only sharing certain websites).
 
-## Adding a Project
+Entities can be associated with multiple projects, allowing you to share data between projects if needed (e.g. creating a public project for only sharing certain websites).
+
+</Card>
+
+
+{/* ## Adding a Project
 
 After finishing the setup process, you will be taken to the Dashboard. From here, you go to the settings page by clicking on the gear icon in the top right corner.
 In the settings page, you can create a new project by clicking on the "New" button. You will be asked to provide a name and description for the project.
@@ -24,4 +36,4 @@ In the settings page, you can create a new project by clicking on the "New" butt
 Once you have created a project, you can add an entity to it by going to the "Entities" tab and clicking on the "New" button. You will be asked to provide a name and description for the entity.
 Headers, you can also assign the entity to one or more projects by selecting them from the list.
 
-Once you have created an entity, you can use the options button on the right side of on any entity to edit or delete it and to view the tracking code for that entity.
+Once you have created an entity, you can use the options button on the right side of on any entity to edit or delete it and to view the tracking code for that entity. */}
