@@ -6,6 +6,7 @@
 
 .expressive-code {
   --ec-brdRad: 10px;
+  --ec-frm-edTabBrdRad: 10px;
   --ec-brdWd: 0px;
 }
 
@@ -185,7 +186,7 @@ h2 {
     flex-direction: column;
     margin-bottom: 4rem;
 
-    img:last-child {
+    a:last-child {
       display: none;
     }
   }
