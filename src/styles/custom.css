@@ -16,10 +16,11 @@
 
 :root[data-theme="light"] {
   --sl-color-bg: #f8f9ff;
-
+  --header-bg: #f8f9ff;
   --sl-color-accent-low: hsl(0, 0%, 27%);
   --sl-color-accent: hsl(0, 0%, 11%);
   --sl-color-accent-high: hsl(0, 0%, 8%);
+  --sl-color-bg-nav: #fff;
 }
 
 [aria-current="page"] {
@@ -28,6 +29,7 @@
 
 :root[data-theme="dark"] {
   --sl-color-bg: #0a0c10;
+  --header-bg: #0a0c1047;
 
   --sl-color-accent-low: hsl(0, 0%, 86%);
   --sl-color-accent: hsl(0, 0%, 91%);
@@ -222,7 +224,7 @@ h2 {
 }
 
 header.header {
-  background: transparent;
+  background-color: var(--header-bg);
   backdrop-filter: blur(10px);
 }
 
