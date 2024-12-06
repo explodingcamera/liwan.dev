@@ -16,6 +16,9 @@ base_url="http://localhost:9042"
 # The port to listen on (http)
 port=9042
 
+# Disable fetching favicons for websites using DuckDuckGo's favicon service
+# disable_favicons=true
+
 # # Folder to store the database in (Will be created if it doesn't exist)
 # # defaults to $HOME/.local/share/liwan/data on linux/macos
 # # defaults to ./liwan-data on other platforms
@@ -41,9 +44,10 @@ port=9042
 | `base_url`                  | `LIWAN_BASE_URL`            | (none)          |
 | `data_dir`                  | `LIWAN_DATA_DIR`            | `./liwan-data`  |
 | `port`                      | `LIWAN_PORT`                | `9042`          |
+| `disable_favicons`          | `LIWAN_DISABLE_FAVICONS`    | `false`         |
 | `geoip.maxmind_account_id`  | `LIWAN_MAXMIND_ACCOUNT_ID`  | (none)          |
 | `geoip.maxmind_license_key` | `LIWAN_MAXMIND_LICENSE_KEY` | (none)          |
 | `geoip.maxmind_edition`     | `LIWAN_MAXMIND_EDITION`     | `GeoLite2-City` |
 | `geoip.maxmind_db_path`     | `LIWAN_MAXMIND_DB_PATH`     | (none)          |
-| `duckdb.memory_limit`       | `DUCKDB_MEMORY_LIMIT`       | (none)          |
-| `duckdb.threads`            | `DUCKDB_THREADS`            | (core count)    |
+| `duckdb.memory_limit`       | `LIWAN_DUCKDB_MEMORY_LIMIT`       | (none)          |
+| `duckdb.threads`            | `LIWAN_DUCKDB_THREADS`            | (core count)    |

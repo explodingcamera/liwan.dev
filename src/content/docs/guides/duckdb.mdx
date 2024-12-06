@@ -17,19 +17,17 @@ but on resource-constrained systems or in certain workloads, it might be benefic
 
 ## Memory Limit
 
-The memory limit of DuckDB can be set using the `DUCKDB_MEMORY_LIMIT` environment variable or `duckdb.memory_limit` in the configuration file.
+The memory limit of DuckDB can be set using the `LIWAN_DUCKDB_MEMORY_LIMIT` environment variable or `duckdb.memory_limit` in the configuration file.
 At an absolute minimum, DuckDB requires 128MB of memory per thread to function. For optimal performance, it is recommended to set the memory limit to around 5GB per thread.
 As a rule of thumb, try limiting the amount of threads first before reducing the memory limit.
 
 ## Thread Limit
 
-The number of threads DuckDB uses can be set using the `DUCKDB_THREAD_LIMIT` environment variable or `duckdb.thread_limit` in the configuration file.
+The number of threads DuckDB uses can be set using the `LIWAN_DUCKDB_THREADS` environment variable or `duckdb.threads` in the configuration file.
 By default, DuckDB uses all available CPU cores.
 
 ## Disk Usage
 
 For large queries that do not fit in memory, DuckDB can spill intermediate results to disk. In these cases, it's recommended to use
 fast storage with and avoid network storage.
-
-<br />
 
