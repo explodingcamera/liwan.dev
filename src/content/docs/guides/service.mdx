@@ -53,7 +53,8 @@ Systemd is the most common and is used by most modern Linux distributions. Anoth
 1. **Creating the service**\
    To run Liwan as a service using `OpenRC`, create a new service script in `/etc/init.d/liwan` with the following content:
 
-   ```sh
+    ```sh
+    #/etc/init.d/liwan
     #!/sbin/openrc-run
 
     name="Liwan"
