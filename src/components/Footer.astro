@@ -6,6 +6,8 @@ import LastUpdated from "@astrojs/starlight/components/LastUpdated.astro";
 import Pagination from "@astrojs/starlight/components/Pagination.astro";
 
 type Props = Parameters<typeof _Footer>[0];
+
+const { entry } = Astro.locals.starlightRoute;
 ---
 
 <footer class="sl-flex">
@@ -16,7 +18,7 @@ type Props = Parameters<typeof _Footer>[0];
   <Pagination {...Astro.props} />
 
   <div class="imprint sl-flex">
-    {(Astro.props.entry.data.template !== "doc") && (
+    {(entry.data.template !== "doc") && (
       <h2>
         <Image src="/favicon.svg" alt="Liwan Logo" width="20" height="20" />
         Liwan - Lightweight Analytics</h2>
@@ -37,7 +39,7 @@ type Props = Parameters<typeof _Footer>[0];
         privacy policy
       </a>
     </div>
-  {(Astro.props.entry.data.template !== "doc") && (
+  {(entry.data.template !== "doc") && (
     <a
       target="_blank"
       href="https://henrygressmann.de"

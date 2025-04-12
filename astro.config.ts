@@ -32,9 +32,13 @@ const starlightConfig = starlight({
 	customCss: ["@fontsource-variable/figtree", "./src/styles/custom.css"],
 	description: "Liwan is a lightweight web analytics tool that respects your users' privacy.",
 	credits: false,
-	social: {
-		github: "https://github.com/explodingcamera/liwan",
-	},
+	social: [
+		{
+			icon: "github",
+			label: "GitHub",
+			href: "https://github.com/explodingcamera/liwan",
+		},
+	],
 	components: {
 		Footer: "./src/components/Footer.astro",
 		Head: "./src/components/Head.astro",
