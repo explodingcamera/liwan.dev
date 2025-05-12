@@ -1,0 +1,14 @@
+---
+title: Ignoring Visits
+---
+
+Currently, Liwan does not support ignoring visits based on specific criteria. By default, Liwan
+will ignore visits from known bots and crawlers and connections from `localhost`/`127.0.0.1`.
+
+However, you can disable the tracking of visits from your own browser by adding `disable-liwan` to your browser's local storage:
+
+```javascript
+localStorage.setItem('disable-liwan', 'true');
+```
+
+This will only prevent Liwan from tracking your own visits and will not affect other users.
