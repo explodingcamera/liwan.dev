@@ -10,17 +10,17 @@
 		"astro": "astro"
 	},
 	"dependencies": {
-		"react": "^19.1.0",
-		"react-dom": "^19.1.0",
-		"@fontsource-variable/figtree": "^5.2.7"
+		"react": "^19.1.1",
+		"react-dom": "^19.1.1",
+		"@fontsource-variable/figtree": "^5.2.8"
 	},
 	"devDependencies": {
-		"@astrojs/starlight": "^0.34.3",
-		"astro": "5.7.12",
+		"@astrojs/starlight": "^0.35.2",
+		"astro": "5.13.3",
 		"remark-frontmatter": "^5.0.0",
-		"@biomejs/biome": "^1.9.4",
-		"typescript": "^5.8.3",
-		"@types/react": "^19.1.4"
+		"@biomejs/biome": "^2.2.0",
+		"typescript": "^5.9.2",
+		"@types/react": "^19.1.11"
 	},
 	"trustedDependencies": ["@biomejs/biome", "esbuild", "sharp"]
 }
