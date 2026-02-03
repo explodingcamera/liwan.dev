@@ -1,17 +1,55 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
-	"formatter": {
-		"indentStyle": "tab",
-		"indentWidth": 2,
-		"lineWidth": 120
-	},
-	"vcs": {
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"assist": {
 		"enabled": true,
-		"useIgnoreFile": true,
-		"clientKind": "git",
-		"defaultBranch": "main"
+		"actions": {
+			"recommended": true,
+			"source": { "recommended": true, "organizeImports": "off" }
+		}
+	},
+	"formatter": {
+		"lineWidth": 100,
+		"indentStyle": "tab"
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"suspicious": {
+				"noArrayIndexKey": "off",
+				"noDuplicateProperties": "off"
+			},
+			"complexity": {
+				"noUselessFragments": "off",
+				"noImportantStyles": "off"
+			},
+			"style": {
+				"noDescendingSpecificity": "off",
+				"noNonNullAssertion": "off"
+			},
+			"correctness": {
+				"useUniqueElementIds": "off",
+				"noUnusedVariables": {
+					"fix": "none",
+					"level": "warn"
+				}
+			}
+		}
 	},
 	"files": {
-		"ignore": ["**/node_modules/*"]
-	}
+		"includes": ["**", "!**/dist/*", "!**/spec.ts*", "!**/.astro/*"]
+	},
+	"overrides": [
+		{
+			"includes": ["**/*.astro"],
+			"linter": {
+				"rules": {
+					"correctness": {
+						"noUnusedImports": "off",
+						"noUnusedVariables": "off"
+					}
+				}
+			}
+		}
+	]
 }

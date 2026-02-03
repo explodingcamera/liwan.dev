@@ -75,7 +75,9 @@ const starlightConfig = starlight({
 		},
 		{
 			label: "Client Libraries",
-			items: [{ label: "JavaScript/Typescript", link: "https://www.npmjs.com/package/liwan-tracker" }],
+			items: [
+				{ label: "JavaScript/Typescript", link: "https://www.npmjs.com/package/liwan-tracker" },
+			],
 		},
 	],
 });

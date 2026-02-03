@@ -1,7 +1,3 @@
 {
-	"extends": "astro/tsconfigs/strict",
-	"mdx": {
-		"checkMdx": true,
-		"plugins": [["remark-frontmatter", ["toml", "yaml"]], "remark-gfm"]
-	}
+	"extends": "astro/tsconfigs/strict"
 }

@@ -1,6 +1,7 @@
 :root {
 	--sl-content-width: 50rem;
-	--sl-font: "Figtree Variable", system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, Helvetica, Arial,
+	--sl-font:
+		"Figtree Variable", system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, Helvetica, Arial,
 		"Helvetica Neue", sans-serif;
 }
 

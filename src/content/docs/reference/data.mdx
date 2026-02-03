@@ -34,6 +34,6 @@ ensuring that the IP and user agent combination cannot feasibly be reversed, mak
 The IP is discarded right after generating the visitor ID and never stored on disk.
 
 ```python
-# Psuedocode for generating the visitor ID
+# Pseudocode for generating the visitor ID
 sha3_256(ip, user_agent, daily_salt, entity_id)[0:16]
 ```
