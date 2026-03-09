@@ -1,8 +1,20 @@
 :root {
 	--sl-content-width: 50rem;
 	--sl-font:
-		"Figtree Variable", system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, Helvetica, Arial,
-		"Helvetica Neue", sans-serif;
+		"Stack Sans Text Variable", system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, Helvetica,
+		Arial, "Helvetica Neue", sans-serif;
+	--sl-font-display:
+		"Stack Sans Headline Variable", system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+		Helvetica, Arial, "Helvetica Neue", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--sl-font-display);
 }
 
 .expressive-code {
@@ -160,9 +172,9 @@ h2 {
 	p {
 		margin-top: 0;
 		font-weight: 400;
-		line-height: 1.5;
-		font-size: clamp(0.8rem, calc(0.5rem + 2vw), 1.4rem);
 		color: var(--sl-color-text);
+		line-height: 1.6;
+		font-size: clamp(0.8rem, calc(0.5rem + 2vw), 1.2rem);
 
 		span {
 			color: var(--sl-color-text-accent);
@@ -177,6 +189,7 @@ h2 {
 	p.title {
 		font-weight: 700;
 		font-size: clamp(1rem, calc(0.5rem + 2vw), 1.6rem);
+		font-family: var(--sl-font-display);
 	}
 }
 

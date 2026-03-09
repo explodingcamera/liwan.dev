@@ -29,7 +29,11 @@ const starlightConfig = starlight({
 	logo: {
 		src: "./src/assets/favicon.svg",
 	},
-	customCss: ["@fontsource-variable/figtree", "./src/styles/custom.css"],
+	customCss: [
+		"@fontsource-variable/stack-sans-headline",
+		"@fontsource-variable/stack-sans-text",
+		"./src/styles/custom.css",
+	],
 	description: "Liwan is a lightweight web analytics tool that respects your users' privacy.",
 	credits: false,
 	social: [
