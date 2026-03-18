@@ -45,3 +45,25 @@ There are many other reverse proxies available, such as [Nginx](https://nginx.or
     Once Caddy is running, you should be able to access Liwan by visiting `https://liwan.example.com`.
 
 </Steps>
+
+## Client IP Headers
+
+Liwan uses the request IP for visitor identification and optional GeoIP lookups.
+When Liwan is behind a reverse proxy, the proxy should forward the original client IP.
+
+Liwan checks these headers (in this order) before falling back to the socket source IP:
+
+- `cf-connecting-ip`
+- `fly-client-ip`
+- `true-client-ip`
+- `x-real-ip`
+- `cloudfront-viewer-address`
+- `x-forwarded-for`
+- `forwarded`
+
+For multi-hop header formats (`x-forwarded-for` and `forwarded`), Liwan currently uses the last entry in the list.
+
+To avoid spoofed values, only trust headers set by your own edge proxy/load balancer.
+Your edge should strip incoming client-provided forwarding headers and set canonical values itself.
+
+For Caddy, the default `reverse_proxy` setup already forwards `X-Forwarded-For` and related headers.

@@ -6,14 +6,18 @@ Liwan can optionally perform a GeoIP lookup on the visitor's IP address to deter
 To enable this feature, you need to provide Liwan with a MaxMind account ID and license key.
 Alternatively, you can specify a path to a local GeoIP database file in the MaxMind DB format (see the [Configuration Reference](/reference/configuration) for more information).
 
+MaxMind is the officially supported provider. If you use a different provider, make sure it exports a compatible `.mmdb` file.
+
 Keep in mind that this will require extra resources and may impact the performance of Liwan, especially on low-end hardware.
 
-## Creating a MaxMind Account
+## MaxMind GeoIP Database
+
+### Creating a MaxMind Account
 
 For Country and City lookups, the free offering from MaxMind is sufficient. You can sign up for a free account on the [MaxMind website](https://www.maxmind.com/geoip/signup).
 Once you have created an account, you can go to the [Manage License Keys](https://www.maxmind.com/en/accounts/current/license-key) page to generate a license key and find your account ID.
 
-## Example Configuration
+### Example Configuration
 
 To enable GeoIP lookups, add the following configuration to your `liwan.config.toml` file:
 
@@ -37,3 +41,18 @@ If you prefer to use a local GeoIP database file, you can specify the path to th
 [geoip]
 maxmind_db_path="/path/to/GeoLite2-City.mmdb"
 ```
+
+## Alternative Providers
+
+You can use other GeoIP providers by keeping a local `.mmdb` file updated on disk.
+Liwan automatically reloads the database file when it changes, so a cron job that periodically replaces the file is enough.
+
+Set `geoip.maxmind_db_path` to the same destination path used by the script.
+
+Some options you can evaluate:
+
+- [IP Location DB](https://github.com/sapics/ip-location-db)
+- [IPinfo Lite](https://ipinfo.io/lite)
+- [IPLocate Free Databases](https://www.iplocate.io/free-databases)
+
+When using a third-party source, verify update frequency, data quality, and license terms for your use case.

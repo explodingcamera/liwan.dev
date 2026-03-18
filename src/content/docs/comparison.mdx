@@ -1,0 +1,68 @@
+---
+title: Comparison with Other Tools
+description: High-level comparison of Liwan and similar analytics tools.
+---
+
+There is no single "best" analytics tool.
+Liwan is designed for a small self-hosted setup with no external database.
+If you need deeper product analytics or marketing-specific workflows, another tool may fit better.
+
+## At a Glance
+
+| Tool | Self-hosted | Hosted cloud | Self-contained[^self-contained] | Funnels/Goals | Ads attribution[^partial] | License |
+| --- | --- | --- | --- | --- | --- | --- |
+| **[Liwan](https://github.com/explodingcamera/liwan)** | ✅ | ❌ | ✅ | ❌ | ➖ | Apache-2.0 |
+| [Matomo](https://github.com/matomo-org/matomo) | ✅ | ✅ | ❌ | ✅ | ✅ | GPL-3.0 |
+| [Plausible](https://github.com/plausible/analytics) | ✅ | ✅ | ❌ | ✅ | ➖ | AGPL-3.0[^plausible-license] |
+| [Umami](https://github.com/umami-software/umami) | ✅ | ✅ | ❌ | ✅ | ❌ | MIT |
+| [PostHog](https://github.com/PostHog/posthog) | ✅ | ✅ | ❌ | ✅ | ➖ | MIT |
+| [Mixpanel](https://mixpanel.com/) | ❌ | ✅ | N/A | ✅ | ➖ | Proprietary |
+| [Google Analytics](https://analytics.google.com/) | ❌ | ✅ | N/A | ✅ | ✅ | Proprietary |
+
+[^self-contained]: Typical self-hosted setup does not require a separate external database service.
+[^partial]: `➖` means partial/basic support compared to tools that focus heavily on that area.
+[^plausible-license]: For Plausible, AGPL-3.0 refers to the self-hosted Community Edition; features and terms can differ in other editions.
+
+## Tool-by-tool Notes
+
+### Liwan
+
+Liwan fits teams that want basic web analytics with low operational overhead.
+It works well for blogs, content sites, and smaller products where simple traffic reporting is enough.
+
+### Matomo
+
+Matomo is a mature platform with a broad feature set and many customization options.
+Compared to Liwan, it generally includes more built-in reporting depth (for example goals, funnels, ecommerce reporting, and plugins).
+It is usually a better fit when you need that depth and are comfortable operating a larger stack.
+
+### Plausible
+
+Plausible focuses on simple analytics with a clean product workflow.
+Compared to Liwan, it typically has stronger built-in goal and event reporting.
+It can be a good fit if you want privacy-focused analytics and do not need a self-contained setup.
+The self-hosted Community Edition is AGPL-3.0, which can be a downside for teams that require a permissive license policy.
+Plausible also has a hosted offering, and features can differ from the Community Edition.
+
+### Umami
+
+Umami is lightweight, open source, and widely used.
+Compared to Liwan, it often has more community integrations and a more familiar web-app style dashboard flow.
+It can be a good fit if you want a self-hosted setup and do not mind running an external database.
+
+### PostHog
+
+PostHog is often used for product analytics-heavy setups.
+Compared to Liwan, it usually covers a wider range of product analytics features (for example funnels, retention, and cohorts), with higher operational complexity.
+
+### Mixpanel
+
+Mixpanel is commonly used for product analytics, especially funnels, retention, and behavior analysis.
+Compared to Liwan, it is more focused on deep product analytics workflows, but it is a hosted proprietary product.
+
+### Google Analytics
+
+Google Analytics is widely used for ad and marketing integrations and attribution workflows.
+Compared to Liwan, it generally has deeper campaign attribution and conversion tracking.
+It is not self-hosted, and data is processed in a third-party cloud.
+If tighter data control is a requirement, self-hosted options are often preferred.

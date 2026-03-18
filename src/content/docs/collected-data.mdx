@@ -1,9 +1,20 @@
 ---
-title: Collected Data
+title: What Data Liwan Collects
+description: What Liwan stores, what it does not store, and where data is processed.
 ---
 
 Liwan is designed to be privacy-friendly and respects the privacy of your visitors.
 It collects only the data that is necessary for generating useful analytics while ensuring that visitors remain anonymous.
+
+Liwan is self-hosted. Analytics data is processed and stored on your infrastructure, not on Liwan-managed cloud servers.
+
+Collection happens per request and is scoped to the entity (website/app) that received the tracking event.
+Liwan intentionally avoids storing directly identifying values such as IP addresses.
+
+## Where is the data stored/processed?
+
+Liwan runs on your server or hosting environment.
+By default, collected analytics data stays within your deployment and data storage.
 
 ## What data does Liwan collect?
 
@@ -14,6 +25,7 @@ Liwan collects the following data:
 - **Browser**: The browser used by the visitor (e.g., Chrome, Firefox). The version is not stored.
 - **Operating System**: The operating system used by the visitor (e.g., Windows, macOS). The version is not stored.
 - **Device Type**: The type of device used by the visitor (e.g., desktop, mobile).
+- **Timestamp**: The time of the visit/event, used for time-series analytics and daily aggregations.
 - **Country** (optional): The country of the visitor based on their IP address.
 - **City** (optional): The city of the visitor based on their IP address.
 - **Visitor ID**: An anonymized ID that is unique to each visitor. This is used to track unique visitors across multiple visits.
@@ -21,6 +33,8 @@ Liwan collects the following data:
 ## What data does Liwan NOT collect?
 
 - **IP Addresses**: Liwan does not store IP addresses. Instead, it uses a hash of the IP address to generate the visitor ID. This ensures that visitors remain anonymous.
+- **Full Referrer Paths**: Liwan stores only the referrer domain, not the full referrer URL path/query.
+- **Query Parameters and URL Fragments**: Liwan strips these from tracked page URLs.
 - **Usernames**: Liwan does not collect usernames or any other personally identifiable information.
 - **Cookies**: Liwan does not use cookies to track visitors.
 - **Cross-Site Tracking**: Visitors have a unique visitor ID that is specific to each website. This means that visitors are not tracked across different websites.
@@ -30,10 +44,10 @@ Liwan collects the following data:
 
 Liwan uses a combination of the visitor's IP address and user agent to generate a unique visitor ID.
 This ID is pseudonymized using a one-way hash function and a unique salt. The salt is rotated daily to
-ensuring that the IP and user agent combination cannot feasibly be reversed, making users anonymous.
+ensure that the IP and user agent combination cannot feasibly be reversed, making users anonymous.
 The IP is discarded right after generating the visitor ID and never stored on disk.
 
 ```python
 # Pseudocode for generating the visitor ID
-sha3_256(ip, user_agent, daily_salt, entity_id)[0:16]
+blake3(ip, user_agent, daily_salt, entity_id)[0:16]
 ```
