@@ -24,6 +24,20 @@ listen="0.0.0.0:9042"
 # # defaults to ./liwan-data on other platforms
 # data_dir="./liwan-data"
 
+# Trusted client IP headers (used in order).
+# Defaults to all supported headers.
+# trusted_headers=["cf-connecting-ip", "fly-client-ip", "true-client-ip", "x-real-ip", "cloudfront-viewer-address", "x-forwarded-for", "forwarded"]
+# You can also include custom headers. Names are case-insensitive.
+# trusted_headers=["X-Forwarded-For", "X-Client-IP"]
+
+# Trusted reverse proxies (IP or CIDR).
+# Empty by default, meaning all proxies are trusted.
+# trusted_proxies=["127.0.0.1", "10.0.0.0/8"]
+
+# Whether to use forwarded IP headers at all.
+# If false, only the direct peer IP is used.
+# use_forward_headers=true
+
 # GeoIp settings (Optional)
 [geoip]
 # # MaxMind account ID and license key
@@ -39,15 +53,18 @@ listen="0.0.0.0:9042"
 
 ## Configuration Options
 
-| TOML Key                    | Environment Variable        | Default         |
-| --------------------------- | --------------------------- | --------------- |
-| `base_url`                  | `LIWAN_BASE_URL`            | (none)          |
-| `data_dir`                  | `LIWAN_DATA_DIR`            | `./liwan-data`  |
-| `listen`                    | `LIWAN_LISTEN`              | `9042`          |
-| `disable_favicons`          | `LIWAN_DISABLE_FAVICONS`    | `false`         |
-| `geoip.maxmind_account_id`  | `LIWAN_MAXMIND_ACCOUNT_ID`  | (none)          |
-| `geoip.maxmind_license_key` | `LIWAN_MAXMIND_LICENSE_KEY` | (none)          |
-| `geoip.maxmind_edition`     | `LIWAN_MAXMIND_EDITION`     | `GeoLite2-City` |
-| `geoip.maxmind_db_path`     | `LIWAN_MAXMIND_DB_PATH`     | (none)          |
-| `duckdb.memory_limit`       | `LIWAN_DUCKDB_MEMORY_LIMIT` | (none)          |
-| `duckdb.threads`            | `LIWAN_DUCKDB_THREADS`      | (core count)    |
+| TOML Key                    | Environment Variable        | Default               |
+| --------------------------- | --------------------------- | --------------------- |
+| `base_url`                  | `LIWAN_BASE_URL`            | (none)                |
+| `data_dir`                  | `LIWAN_DATA_DIR`            | `./liwan-data`        |
+| `listen`                    | `LIWAN_LISTEN`              | `9042`                |
+| `disable_favicons`          | `LIWAN_DISABLE_FAVICONS`    | `false`               |
+| `trusted_headers`           | `LIWAN_TRUSTED_HEADERS`     | all supported headers |
+| `trusted_proxies`           | `LIWAN_TRUSTED_PROXIES`     | empty (all trusted)   |
+| `use_forward_headers`       | `LIWAN_USE_FORWARD_HEADERS` | `true`                |
+| `geoip.maxmind_account_id`  | `LIWAN_MAXMIND_ACCOUNT_ID`  | (none)                |
+| `geoip.maxmind_license_key` | `LIWAN_MAXMIND_LICENSE_KEY` | (none)                |
+| `geoip.maxmind_edition`     | `LIWAN_MAXMIND_EDITION`     | `GeoLite2-City`       |
+| `geoip.maxmind_db_path`     | `LIWAN_MAXMIND_DB_PATH`     | (none)                |
+| `duckdb.memory_limit`       | `LIWAN_DUCKDB_MEMORY_LIMIT` | (none)                |
+| `duckdb.threads`            | `LIWAN_DUCKDB_THREADS`      | (core count)          |

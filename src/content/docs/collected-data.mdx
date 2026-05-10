@@ -20,7 +20,8 @@ By default, collected analytics data stays within your deployment and data stora
 
 Liwan collects the following data:
 
-- **URLs**: The URL of the page that was visited (excluding query parameters and fragments).
+- **URLs**: The URL of the page that was visited
+- **UTM Parameters**: If present in the URL, Liwan collects UTM parameters for campaign tracking (utm_source, utm_medium, utm_campaign, utm_content, utm_term).
 - **Referrers**: The URL of the page that referred the visitor to the current page. Only the domain is stored.
 - **Browser**: The browser used by the visitor (e.g., Chrome, Firefox). The version is not stored.
 - **Operating System**: The operating system used by the visitor (e.g., Windows, macOS). The version is not stored.
@@ -29,12 +30,13 @@ Liwan collects the following data:
 - **Country** (optional): The country of the visitor based on their IP address.
 - **City** (optional): The city of the visitor based on their IP address.
 - **Visitor ID**: An anonymized ID that is unique to each visitor. This is used to track unique visitors across multiple visits.
+- **Screen Orientation / Width**: The screen orientation (portrait/landscape) and approximate screen width (e.g., XS, SM, MD, LG, XL, 2XL).
 
 ## What data does Liwan NOT collect?
 
 - **IP Addresses**: Liwan does not store IP addresses. Instead, it uses a hash of the IP address to generate the visitor ID. This ensures that visitors remain anonymous.
 - **Full Referrer Paths**: Liwan stores only the referrer domain, not the full referrer URL path/query.
-- **Query Parameters and URL Fragments**: Liwan strips these from tracked page URLs.
+- **Query Parameters and URL Fragments**: Liwan strips these from tracked page URLs (except for utm parameters if present).
 - **Usernames**: Liwan does not collect usernames or any other personally identifiable information.
 - **Cookies**: Liwan does not use cookies to track visitors.
 - **Cross-Site Tracking**: Visitors have a unique visitor ID that is specific to each website. This means that visitors are not tracked across different websites.

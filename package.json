@@ -10,21 +10,21 @@
 		"astro": "astro"
 	},
 	"dependencies": {
-		"@astrojs/react": "^5.0.1",
+		"@astrojs/react": "^5.0.4",
 		"@fontsource-variable/stack-sans-headline": "^5.2.1",
 		"@fontsource-variable/stack-sans-text": "^5.2.1",
 		"@types/react-dom": "^19.2.3",
-		"react": "^19.2.4",
-		"react-dom": "^19.2.4"
+		"react": "^19.2.6",
+		"react-dom": "^19.2.6"
 	},
 	"devDependencies": {
-		"@astrojs/starlight": "^0.38.1",
-		"@biomejs/biome": "^2.4.8",
+		"@astrojs/starlight": "^0.39.2",
+		"@biomejs/biome": "^2.4.15",
 		"@types/react": "^19.2.14",
-		"astro": "6.0.6",
-		"marked": "^17.0.4",
+		"astro": "6.3.1",
+		"marked": "^18.0.3",
 		"remark-frontmatter": "^5.0.0",
-		"typescript": "^5.9.3"
+		"typescript": "^6.0.3"
 	},
 	"trustedDependencies": [
 		"@biomejs/biome",

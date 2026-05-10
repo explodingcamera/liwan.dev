@@ -1,0 +1,75 @@
+---
+title: Metrics and Dimensions
+description: What each dashboard metric and dimension means in Liwan.
+---
+
+Use this page as a quick reference for what you see in the dashboard.
+
+## Metrics
+
+| Metric               | What it means                                                  |
+| -------------------- | -------------------------------------------------------------- |
+| Total Views          | Total number of pageviews in the selected date range.          |
+| Unique Visitors      | Number of distinct visitors in the selected date range.        |
+| Bounce Rate          | Percentage of sessions that had only one pageview.             |
+| Average Time on Site | Average time in seconds between pageviews in the same session.[^avg-time] |
+
+[^avg-time]: Only tracked for sessions with more than one view.
+
+## Dimensions
+
+### Pages and Traffic Sources
+
+| Dimension  | What it means                                                                              |
+| ---------- | ------------------------------------------------------------------------------------------ |
+| Page       | The full tracked page (`domain + path`), for example `example.com/docs`.                   |
+| Entry Page | First page in a session.                                                                   |
+| Exit Page  | Last page in a session.                                                                    |
+| Domain     | The hostname of the tracked page.                                                          |
+| Path       | The page path (for example `/docs/getting-started`).                                       |
+| Referrer   | The domain that sent the visitor to your site. Known spam and local referrers are ignored. |
+
+Entry Page and Exit Page are available when the selected metric is Total Views or Unique Visitors.
+
+### Device and Client
+
+| Dimension    | What it means                                                        |
+| ------------ | -------------------------------------------------------------------- |
+| Platform     | Visitor operating system (for example iOS, Android, Windows, macOS). |
+| Browser      | Visitor browser family (for example Chrome, Safari, Firefox).        |
+| Device Type  | Mobile or Desktop.                                                   |
+| Screen Width | Screen-size bucket reported by the tracker script.                   |
+| Orientation  | Portrait or Landscape, reported by the tracker script.               |
+
+| Screen Width Bucket | Range        |
+| ------------------- | ------------ |
+| XS                  | 0-479 px     |
+| SM                  | 480-767 px   |
+| MD                  | 768-1023 px  |
+| LG                  | 1024-1279 px |
+| XL                  | 1280-1535 px |
+| 2XL                 | 1536+ px     |
+
+### Location (Optional)
+
+| Dimension | What it means                     |
+| --------- | --------------------------------- |
+| Country   | Visitor country (requires GeoIP). |
+| City      | Visitor city (requires GeoIP).    |
+
+### Campaigns (UTM)
+
+| Dimension | What it means                     |
+| --------- | --------------------------------- |
+| Source    | `utm_source` from the page URL.   |
+| Medium    | `utm_medium` from the page URL.   |
+| Campaign  | `utm_campaign` from the page URL. |
+| Content   | `utm_content` from the page URL.  |
+| Term      | `utm_term` from the page URL.     |
+
+## How Liwan Gets This Data
+
+1. The tracker sends pageview data (URL, referrer, UTM values, screen width bucket, and orientation).
+2. The server filters bots and normalizes incoming values.
+3. If GeoIP is enabled, country and city are added.
+4. The dashboard aggregates stored events into metrics and dimension tables.
