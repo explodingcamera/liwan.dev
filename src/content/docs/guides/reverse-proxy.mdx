@@ -4,16 +4,16 @@ title: Setting up a Reverse Proxy
 
 import { Aside, Steps } from "@astrojs/starlight/components";
 
-When exposing Liwan to the public internet, it is recommended to use a reverse proxy to handle SSL termination and other security-related tasks. This guide will show you how to set up a reverse proxy using Caddy.
+When exposing Liwan to the public internet, a reverse proxy is a convenient way to handle HTTPS and keep Liwan itself on a private or local address. This guide uses Caddy.
 
-There are many other reverse proxies available, such as [Nginx](https://nginx.org/) ([guide](https://github.com/nginx-proxy/acme-companion)), [Traefik](https://traefik.io/traefik/) ([guide](https://doc.traefik.io/traefik/getting-started/install-traefik/)), and [HAProxy](https://www.haproxy.org/) ([guide](https://www.haproxy.com/blog/haproxy-and-let-s-encrypt)), which all vary in complexity and features.
+Other common choices include [Nginx](https://nginx.org/), [Traefik](https://traefik.io/traefik/), and [HAProxy](https://www.haproxy.org/).
 
 
 ## Setting up Caddy
 
 <Aside type="caution" title="Firewall Configuration">
   Depending on your setup, you might want to configure your firewall to only
-  allow incoming traffic on ports `80` and `443` from the internet, as liwan
+  allow incoming traffic on ports `80` and `443` from the internet, as Liwan
   listens on all interfaces by default. A simple way to do this on many Linux
   distributions is using `ufw`, check the [official
   documentation](https://help.ubuntu.com/community/UFW) for more information.
@@ -35,8 +35,7 @@ There are many other reverse proxies available, such as [Nginx](https://nginx.or
     }
     ```
 
-    This configuration tells Caddy to listen for requests on `liwan.example.com`, reverse proxy them to Liwan running on port `9042`,
-    and use Let's Encrypt to automatically obtain and renew SSL certificates.
+    This tells Caddy to serve `liwan.example.com`, proxy requests to Liwan on port `9042`, and use Let's Encrypt for certificates.
 
 3.  **Start Caddy**\
     Again, depending on your setup, you may need to start Caddy manually or set it up as a service.
@@ -63,7 +62,8 @@ Liwan checks these headers (in this order) before falling back to the socket sou
 
 For multi-hop header formats (`x-forwarded-for` and `forwarded`), Liwan currently uses the last entry in the list.
 
-To avoid spoofed values, only trust headers set by your own edge proxy/load balancer.
-Your edge should strip incoming client-provided forwarding headers and set canonical values itself.
+Forwarded IP headers can be spoofed if Liwan receives them directly from the public internet. Only trust forwarding headers from infrastructure you control, such as your reverse proxy.
+
+If possible, configure that proxy to strip incoming client-provided forwarding headers and set its own canonical values.
 
 For Caddy, the default `reverse_proxy` setup already forwards `X-Forwarded-For` and related headers.

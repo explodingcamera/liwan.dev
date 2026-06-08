@@ -10,7 +10,7 @@ Use this page as a quick reference for what you see in the dashboard.
 | Metric               | What it means                                                  |
 | -------------------- | -------------------------------------------------------------- |
 | Total Views          | Total number of pageviews in the selected date range.          |
-| Unique Visitors      | Number of distinct visitors in the selected date range.        |
+| Unique Visitors      | Number of distinct visitor groups in the selected date range.  |
 | Bounce Rate          | Percentage of sessions that had only one pageview.             |
 | Average Time on Site | Average time in seconds between pageviews in the same session.[^avg-time] |
 
@@ -69,7 +69,7 @@ Entry Page and Exit Page are available when the selected metric is Total Views o
 
 ## How Liwan Gets This Data
 
-1. The tracker sends pageview data (URL, referrer, UTM values, screen width bucket, and orientation).
-2. The server filters bots and normalizes incoming values.
+1. The tracker sends pageview data (URL, referrer, screen width bucket, and orientation).
+2. The server filters bots, extracts UTM fields when enabled, and normalizes incoming values.
 3. If GeoIP is enabled, country and city are added.
 4. The dashboard aggregates stored events into metrics and dimension tables.

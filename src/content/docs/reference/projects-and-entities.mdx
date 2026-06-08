@@ -4,36 +4,20 @@ title: Projects and Entities
 
 import { Card } from "@astrojs/starlight/components";
 
-Similar to Google Analytics' "Account" and "Property" structure, Liwan uses the concept of "Projects" and "Entities" to organize your data.
+Liwan uses **projects** and **entities** to organize analytics data.
 
 <Card title="Projects">
 
-Projects are the top-level container for your data. You can think of them as a
-collection of websites or applications that you want to track. These are used
-to group your data in the dashboard and to manage access control.
+Projects are dashboard containers. They group one or more entities for reporting and access control.
 
-Depending on your use case, you might have a project for each of your websites, or one grouping together a
-website and its mobile app.
+Depending on your setup, you might create one project per website, or one project that combines a website and related app.
 
 </Card>
 
 <Card title="Entities">
 
-Entities are the individual websites or applications that you want to track. These store the actual data and are what you will define your tracking code for.
+Entities are the individual websites or applications that send events. Each tracking snippet is tied to an entity.
 
-Entities can be associated with multiple projects, allowing you to share data between projects if needed (e.g. creating a public project for only sharing certain websites).
+Entities can belong to multiple projects, so the same source can appear in more than one dashboard.
 
 </Card>
-
-
-{/* ## Adding a Project
-
-After finishing the setup process, you will be taken to the Dashboard. From here, you go to the settings page by clicking on the gear icon in the top right corner.
-In the settings page, you can create a new project by clicking on the "New" button. You will be asked to provide a name and description for the project.
-
-## Adding an Entity
-
-Once you have created a project, you can add an entity to it by going to the "Entities" tab and clicking on the "New" button. You will be asked to provide a name and description for the entity.
-Headers, you can also assign the entity to one or more projects by selecting them from the list.
-
-Once you have created an entity, you can use the options button on the right side of on any entity to edit or delete it and to view the tracking code for that entity. */}

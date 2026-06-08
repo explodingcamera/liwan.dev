@@ -2,11 +2,11 @@
 title: Configuration Reference
 ---
 
-Liwan can be configured using a configuration file or environment variables. Configuration files are written in [TOML](https://toml.io/en/) format.
-Liwan tries to load the configuration file from the current directory (or `~/.config/liwan/liwan.config.toml` on Linux/macOS) by default.
-Alternatively, you can use the `--config` flag or the `LIWAN_CONFIG` environment variable to specify a path to the configuration file.
+Liwan can be configured with a TOML configuration file or environment variables.
 
-To generate a default configuration file, you can run `liwan generate-config` (or `liwan generate-config -o OUTPUT_PATH`), which will create a `liwan.config.toml` file in the current directory with the following content:
+By default, Liwan looks for `liwan.config.toml` in the current directory, then `~/.config/liwan/liwan.config.toml` on Linux/macOS. You can also pass `--config` or set `LIWAN_CONFIG`.
+
+To generate an example configuration file, run `liwan generate-config` or `liwan generate-config -o OUTPUT_PATH`.
 
 ```toml
 # liwan.config.toml
@@ -55,9 +55,9 @@ listen="0.0.0.0:9042"
 
 | TOML Key                    | Environment Variable        | Default               |
 | --------------------------- | --------------------------- | --------------------- |
-| `base_url`                  | `LIWAN_BASE_URL`            | (none)                |
-| `data_dir`                  | `LIWAN_DATA_DIR`            | `./liwan-data`        |
-| `listen`                    | `LIWAN_LISTEN`              | `9042`                |
+| `base_url`                  | `LIWAN_BASE_URL`            | `http://localhost:9042` |
+| `data_dir`                  | `LIWAN_DATA_DIR`            | platform data dir[^data-dir] |
+| `listen`                    | `LIWAN_LISTEN`              | `0.0.0.0:9042`        |
 | `disable_favicons`          | `LIWAN_DISABLE_FAVICONS`    | `false`               |
 | `trusted_headers`           | `LIWAN_TRUSTED_HEADERS`     | all supported headers |
 | `trusted_proxies`           | `LIWAN_TRUSTED_PROXIES`     | empty (all trusted)   |
@@ -68,3 +68,5 @@ listen="0.0.0.0:9042"
 | `geoip.maxmind_db_path`     | `LIWAN_MAXMIND_DB_PATH`     | (none)                |
 | `duckdb.memory_limit`       | `LIWAN_DUCKDB_MEMORY_LIMIT` | (none)                |
 | `duckdb.threads`            | `LIWAN_DUCKDB_THREADS`      | (core count)          |
+
+[^data-dir]: On Linux/macOS this defaults to `$XDG_DATA_HOME/liwan/data` or `$HOME/.local/share/liwan/data`. On other platforms it defaults to `./liwan-data`.

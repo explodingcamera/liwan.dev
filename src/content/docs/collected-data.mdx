@@ -1,55 +1,161 @@
 ---
-title: What Data Liwan Collects
-description: What Liwan stores, what it does not store, and where data is processed.
+title: Data Collection
+description: What Liwan collects, derives, stores, and lets you disable.
 ---
 
-Liwan is designed to be privacy-friendly and respects the privacy of your visitors.
-It collects only the data that is necessary for generating useful analytics while ensuring that visitors remain anonymous.
+import { Aside } from "@astrojs/starlight/components";
 
-Liwan is self-hosted. Analytics data is processed and stored on your infrastructure, not on Liwan-managed cloud servers.
+Liwan is self-hosted web analytics. Events are processed by your Liwan server and stored in your deployment, not on Liwan-managed cloud servers.
 
-Collection happens per request and is scoped to the entity (website/app) that received the tracking event.
-Liwan intentionally avoids storing directly identifying values such as IP addresses.
+Liwan is designed to avoid cookies, cross-site tracking, and long-lived visitor identifiers. It still collects analytics events, so you should choose collection settings that fit your site and legal requirements.
 
-## Where is the data stored/processed?
+<Aside type="caution" title="Consent requirements vary">
+  Cookie-free analytics does not automatically mean consent-banner-free
+  analytics in every jurisdiction. See [Cookie banners and analytics
+  consent](/guides/cookie-banners/) for background and links to external legal
+  discussions.
+</Aside>
 
-Liwan runs on your server or hosting environment.
-By default, collected analytics data stays within your deployment and data storage.
+## Recommended Defaults
 
-## What data does Liwan collect?
+If you want a more conservative setup:
 
-Liwan collects the following data:
+- Use **Random per request** or **Network standard** visitor grouping.
+- Use **Country only** or **None** for geolocation.
+- Disable **UTM parameters** unless you need campaign attribution.
+- Disable **Session metrics** unless you need bounce rate, time on site, entry page, and exit page.
+- Use a retention period around **6 months**.
+- Add drop rules for internal, local, test, or other unwanted traffic.
 
-- **URLs**: The URL of the page that was visited
-- **UTM Parameters**: If present in the URL, Liwan collects UTM parameters for campaign tracking (utm_source, utm_medium, utm_campaign, utm_content, utm_term).
-- **Referrers**: The URL of the page that referred the visitor to the current page. Only the domain is stored.
-- **Browser**: The browser used by the visitor (e.g., Chrome, Firefox). The version is not stored.
-- **Operating System**: The operating system used by the visitor (e.g., Windows, macOS). The version is not stored.
-- **Device Type**: The type of device used by the visitor (e.g., desktop, mobile).
-- **Timestamp**: The time of the visit/event, used for time-series analytics and daily aggregations.
-- **Country** (optional): The country of the visitor based on their IP address.
-- **City** (optional): The city of the visitor based on their IP address.
-- **Visitor ID**: An anonymized ID that is unique to each visitor. This is used to track unique visitors across multiple visits.
-- **Screen Orientation / Width**: The screen orientation (portrait/landscape) and approximate screen width (e.g., XS, SM, MD, LG, XL, 2XL).
+## Where Data Is Processed
 
-## What data does Liwan NOT collect?
+Liwan runs on your server or hosting environment. The browser sends tracking events to your Liwan instance, and your instance stores the resulting analytics rows.
 
-- **IP Addresses**: Liwan does not store IP addresses. Instead, it uses a hash of the IP address to generate the visitor ID. This ensures that visitors remain anonymous.
-- **Full Referrer Paths**: Liwan stores only the referrer domain, not the full referrer URL path/query.
-- **Query Parameters and URL Fragments**: Liwan strips these from tracked page URLs (except for utm parameters if present).
-- **Usernames**: Liwan does not collect usernames or any other personally identifiable information.
-- **Cookies**: Liwan does not use cookies to track visitors.
-- **Cross-Site Tracking**: Visitors have a unique visitor ID that is specific to each website. This means that visitors are not tracked across different websites.
-- **Persistent Identifiers**: Visitors are not tracked across multiple days. Each day is treated as a separate session.
+The raw IP address is used during request processing for visitor grouping and optional geolocation, then discarded. It is not stored in the events database.
 
-## How are Visitors Identified?
+## What The Tracker Sends
 
-Liwan uses a combination of the visitor's IP address and user agent to generate a unique visitor ID.
-This ID is pseudonymized using a one-way hash function and a unique salt. The salt is rotated daily to
-ensure that the IP and user agent combination cannot feasibly be reversed, making users anonymous.
-The IP is discarded right after generating the visitor ID and never stored on disk.
+The browser-side tracker can send:
 
-```python
-# Pseudocode for generating the visitor ID
-blake3(ip, user_agent, daily_salt, entity_id)[0:16]
-```
+- **Page URL**: the current page URL, with URL fragments removed and only attribution query parameters preserved.
+- **Referrer**: where the visitor came from, if the browser provides it.
+- **Attribution query parameters**: campaign-style query parameters in the page URL. Liwan stores them separately only when UTM tracking is enabled.
+- **Screen width bucket**: a coarse bucket such as `SM`, `MD`, or `XL`.
+- **Orientation**: portrait or landscape.
+- **Event name**: currently pageview-style events unless you use custom tracking code.
+
+Liwan strips query parameters and URL fragments from stored page URLs. The default browser tracker also ignores `localhost`, loopback IPs, and `file://` pages.
+
+## What The Server Derives
+
+The Liwan server can derive additional fields from the request:
+
+- **Visitor grouping ID** from the request IP address, user agent, entity ID, and daily salt, depending on the selected visitor grouping mode.
+- **Browser and platform families** from the user agent string, without full version strings.
+- **Device type** from the user agent parser.
+- **Country and city** from GeoIP lookup, if geolocation is enabled and configured.
+- **Session intervals** for bounce rate, time on site, entry page, and exit page, if session metrics are enabled.
+
+Liwan also drops obvious bot traffic and spam or local referrers before storage.
+
+## Visitor Grouping
+
+Visitor grouping controls how repeat visits are counted without storing raw IP addresses.
+
+| Mode               | What it does                                                                           | Privacy note                                                                                                                                                |
+| ------------------ | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Accurate           | Hashes IP address, user agent, daily salt, and entity ID.                              | Groups visitors most accurately, but uses hashed fingerprinting (IP + User Agent) during processing. Still rotates daily and does not store the raw inputs. |
+| Random per request | Generates a random visitor ID for each event.                                          | Minimizes repeat-visitor recognition because events are not linked by IP address or user agent.                                                             |
+| Network standard   | Hashes a masked network prefix (`/24` IPv4, `/56` IPv6) with daily salt and entity ID. | Avoids exact-IP grouping and does not use user agent in the grouping hash.                                                                                  |
+| Network balanced   | Hashes a narrower masked network prefix (`/28` IPv4, `/64` IPv6).                      | Uses a more specific network prefix than standard mode, but still avoids user agent in the grouping hash.                                                   |
+| Network accurate   | Hashes the full IP address with daily salt and entity ID, without user agent.          | Uses exact IP during processing, but avoids user agent in the grouping hash and rotates daily.                                                              |
+
+The daily salt rotates, so visitor grouping is not persistent across days.
+
+For a more privacy-oriented setup, use **Random per request** or **Network standard**. IP-based network modes group traffic by network address blocks, not individual humans.
+
+## Geolocation
+
+Geolocation can be disabled or limited:
+
+- **None**: do not store country or city.
+- **Country**: store only country.
+- **Country and city**: store both country and city.
+
+GeoIP lookup uses the request IP during processing. The IP address itself is discarded after processing.
+
+If you do not need city-level metrics, use **Country only** or **None**.
+
+## UTM Parameters
+
+When UTM tracking is enabled, Liwan stores these campaign fields from page URLs:
+
+- `utm_source`
+- `utm_medium`
+- `utm_campaign`
+- `utm_content`
+- `utm_term`
+
+Liwan also accepts common aliases such as `source`, `medium`, `campaign`, `content`, `term`, `ref`, `referrer`, and `referer`, and maps them into the same stored UTM fields.
+
+Disable UTM tracking if you do not need campaign attribution or want to reduce stored marketing data.
+
+## Session Metrics
+
+Session metrics are required for:
+
+- Bounce rate
+- Average time on site
+- Entry page
+- Exit page
+
+When enabled, Liwan stores intervals between pageviews for a visitor group. When disabled, those dashboard metrics are unavailable or less complete.
+
+## Drop Rules
+
+Drop rules remove matching events before they are stored.
+
+Each rule is checked separately. Inside one rule, all filters must match. Matching any rule drops the event.
+
+Examples:
+
+- Drop local development traffic by domain or path.
+- Drop internal pages.
+- Drop traffic with a known test campaign value.
+- Drop events from a specific country or city if geolocation is enabled.
+
+Global drop rules apply to every entity. Entity drop rules are additional rules for that entity only.
+
+## Retention And Pruning
+
+Retention controls how long historical events are kept. You can keep all history or automatically prune events older than a selected number of days.
+
+The pruning tool can also apply current collection settings to historical data:
+
+- Clear UTM fields when UTM tracking is disabled.
+- Clear geolocation fields when geolocation is disabled or reduced.
+- Clear session interval fields when session metrics are disabled.
+- Delete events older than the selected retention period.
+
+Run a dry run first to preview how many events would be affected.
+
+A **6 month** retention period is a reasonable default for many sites.
+
+## Operational Notes
+
+Liwan uses a daily rotating salt and does not store raw IP addresses. In practice, Liwan does not keep enough information to look up one specific visitor's history across multiple days, which is a consequence of its data-minimization approach.
+
+Because Liwan is self-hosted, your analytics data stays in your infrastructure rather than being sent to a third-party analytics vendor.
+
+## What Liwan Does Not Store
+
+Liwan does not store:
+
+- Raw IP addresses.
+- Cookies for visitor tracking.
+- Cross-site visitor identifiers.
+- Full referrer paths or query strings from normal URL referrers.
+- Page URL query strings or fragments, except extracted UTM parameters when enabled.
+- Visitor identifiers that persist across multiple days.
+
+Liwan still processes request data such as IP address and user agent to produce analytics. If you need stricter behavior, use the collection settings above, add drop rules, or change the tracker or server behavior.
