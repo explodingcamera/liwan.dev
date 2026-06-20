@@ -4,8 +4,7 @@ title: Running Liwan as a Service
 
 import { Steps, Tabs, TabItem } from "@astrojs/starlight/components";
 
-Liwan can be run as a service on most operating systems. This allows you to start Liwan automatically when your server boots and manage it using the system's service manager.
-Systemd is the most common and is used by most modern Linux distributions. Another popular init system is OpenRC, which is used by Gentoo and Alpine Linux.
+Liwan can run as a service so it starts automatically when your server boots. This page shows examples for systemd and OpenRC.
 
 <Tabs syncKey="init"><TabItem icon="rocket" label="systemd">
 <Steps>
@@ -27,7 +26,7 @@ Systemd is the most common and is used by most modern Linux distributions. Anoth
     WantedBy=multi-user.target
     ```
 
-    Replace `yourusername` with your username and adjust the paths to match your setup.
+    Replace `yourusername` and adjust the paths to match your setup.
     To generate a configuration file, you can run `liwan generate-config -o ~/.config/liwan/liwan.config.toml`.
 
 2.  **Starting the service**\
@@ -79,7 +78,7 @@ Systemd is the most common and is used by most modern Linux distributions. Anoth
     }
    ```
 
-   Replace yourusername with your username and adjust the paths to match your setup. Make sure the script is executable:
+   Replace `yourusername` and adjust the paths to match your setup. Make sure the script is executable:
 
    ```sh
    chmod +x /etc/init.d/liwan
@@ -88,8 +87,7 @@ Systemd is the most common and is used by most modern Linux distributions. Anoth
    To generate an example configuration file, you can run `liwan generate-config -o ~/.config/liwan/liwan.config.toml`.
 
 2. **Starting the service**\
-   Starting the service
-   After creating the service script, add the service to the default runlevel and start it:
+   After creating the service script, add it to the default runlevel and start it:
 
    ```sh
    # Add the service to the default runlevel

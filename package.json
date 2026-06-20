@@ -10,19 +10,19 @@
 		"astro": "astro"
 	},
 	"dependencies": {
-		"@astrojs/react": "^5.0.4",
+		"@astrojs/react": "^5.0.7",
 		"@fontsource-variable/stack-sans-headline": "^5.2.1",
 		"@fontsource-variable/stack-sans-text": "^5.2.1",
 		"@types/react-dom": "^19.2.3",
-		"react": "^19.2.6",
-		"react-dom": "^19.2.6"
+		"react": "^19.2.7",
+		"react-dom": "^19.2.7"
 	},
 	"devDependencies": {
-		"@astrojs/starlight": "^0.39.2",
-		"@biomejs/biome": "^2.4.15",
-		"@types/react": "^19.2.14",
-		"astro": "6.3.1",
-		"marked": "^18.0.3",
+		"@astrojs/starlight": "^0.40.0",
+		"@biomejs/biome": "^2.5.0",
+		"@types/react": "^19.2.17",
+		"astro": "6.4.8",
+		"marked": "^18.0.5",
 		"remark-frontmatter": "^5.0.0",
 		"typescript": "^6.0.3"
 	},

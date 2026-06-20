@@ -1,19 +1,24 @@
 ---
-title: Installing Liwan using Docker
+title: Installing Liwan Using Docker
 ---
 
-To install Liwan using Docker, run the following command:
+To run Liwan with Docker:
 
 ```sh "127.0.0.1:9042" "https://a.example.com"
 docker run -d --name liwan \
-    -p 127.0.0.1:9042:9042 \
-    -v liwan-data:/data \
-    -e LIWAN_BASE_URL=https://a.example.com \
-    ghcr.io/explodingcamera/liwan:1.5
+  -p 127.0.0.1:9042:9042 \
+  -v liwan-data:/data \
+  -e LIWAN_BASE_URL=https://a.example.com \
+  ghcr.io/explodingcamera/liwan:1.6
 ```
 
-This will start Liwan and bind it to port 9042 on localhost. To make Liwan accessible from the internet,
-you will need to set up a reverse proxy. For more information, see the [Setting up a Reverse Proxy](/guides/reverse-proxy) guide and the [Configuration Reference](/reference/configuration) for all configuration options.
+The important parts are:
+
+- `-p 127.0.0.1:9042:9042` binds Liwan to localhost on port `9042`.
+- `-v liwan-data:/data` stores Liwan data in a persistent Docker volume.
+- `LIWAN_BASE_URL` should match the public URL where your Liwan instance will be reachable.
+
+This starts Liwan on `127.0.0.1:9042` with persistent data in the `liwan-data` Docker volume. For a public instance, you will usually add a reverse proxy for HTTPS and public routing. See [Setting up a Reverse Proxy](/guides/reverse-proxy) and the [Configuration Reference](/reference/configuration).
 
 To view the logs (and find the setup URL), you can run:
 

@@ -1,0 +1,67 @@
+---
+title: Cookie Banners And Analytics Consent
+description: A short overview of cookie-free analytics, consent, and Liwan settings.
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+Liwan does not use cookies for visitor tracking, does not store raw IP addresses, and does not create persistent cross-site identifiers. That reduces privacy risk, but it does not automatically prove that your site can skip analytics consent banners everywhere. Liwan provides configuration options; it does not determine whether your specific deployment requires consent.
+
+<Aside type="caution" title="Not legal advice">
+  This is a rough overview for Liwan operators. If consent banners, GDPR, ePrivacy, PECR, or national cookie laws matter for your deployment, ask a qualified lawyer or privacy professional.
+</Aside>
+
+## The Short Version
+
+- Cookie-free does not always mean consent-free.
+- ePrivacy-style rules can depend on how data is collected or accessed, not only what is stored.
+- National interpretations differ, especially in Europe.
+- Liwan gives you privacy controls, but it does not decide whether your setup needs consent.
+
+## Practical Approach
+
+If you want the safest legal posture, ask for consent before loading or sending analytics events.
+
+If you want to avoid a banner, treat that as a legal and product decision rather than a default property of Liwan. Document what Liwan collects, choose conservative settings, and review the relevant jurisdictions for your audience.
+
+## Conservative Liwan Settings
+
+These settings reduce collected and stored data. They do not guarantee that consent is unnecessary.
+
+- Visitor grouping: **Random per request** to avoid linking requests by IP address, User Agent, or other repeatable visitor signals. Avoid **Accurate** mode unless you have assessed consent requirements.
+- Geolocation detail: **No geolocation lookup**.
+- Session metrics: **Do not track** unless bounce rate, time on site, entry page, and exit page are needed.
+- UTM parameters: **Do not track** unless campaign attribution is needed.
+- History retention: keep it short, such as **6 months**.
+- Drop rules: exclude internal, test, local, or sensitive traffic before storage.
+
+If you still need approximate visitor estimates, consider **Network standard** or **Network balanced**, understanding that IP-derived grouping may still need legal review in some jurisdictions.
+
+## Technical Scope of ePrivacy
+
+The EDPB clarified in Guidelines 2/2023 that Article 5(3) can apply to more than cookies, including some cases where information from a user's device or browser is collected or used for tracking-like purposes.
+
+Liwan's tracker sends a small client-side payload: page URL, referrer, event name, a coarse screen-width bucket, and orientation. The server derives browser family, platform family, and device type from the request's User-Agent header rather than storing full browser or OS version strings.
+
+Using **Network standard** or **Random per request** reduces fingerprinting risk in visitor grouping because those modes do not use the User Agent in the visitor grouping hash.
+
+## If You Need A Consent Gate
+
+Liwan does not currently include a consent manager. You can gate tracking from your site by setting a local storage item:
+
+`localStorage.setItem("disable-liwan", "true");`
+
+When this is set, the tracker script will ignore all events. You can wire this up to your consent banner:
+
+1. Store the visitor's consent choice in your own consent system.
+2. For an opt-in setup, set `localStorage.setItem("disable-liwan", "true");` by default before Liwan loads, and remove it only after consent is granted.
+3. For an opt-out setup, set the `disable-liwan` local storage item if they deny consent.
+
+Because Liwan is open source, you can also modify the tracker or event endpoint for stricter requirements.
+
+## Further Reading
+
+- [Matomo: ePrivacy Directive, national implementations, and website analytics](https://matomo.org/faq/general/eprivacy-directive-national-implementations-and-website-analytics/)
+- [Do cookie-free analytics need cookie banners?](https://jfagerberg.me/blog/2022-06-09-analytics-cookie-compliance/)
+- [Plausible discussion: "No need for cookie banners" might be incorrect](https://github.com/plausible/analytics/discussions/1963)
+- [EDPB Guidelines 2/2023 on the technical scope of Article 5(3) ePrivacy Directive](https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-22023-technical-scope-art-53-eprivacy-directive_en)
