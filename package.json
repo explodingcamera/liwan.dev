@@ -18,10 +18,10 @@
 		"react-dom": "^19.2.7"
 	},
 	"devDependencies": {
-		"@astrojs/starlight": "^0.39.3",
-		"@biomejs/biome": "^2.4.16",
+		"@astrojs/starlight": "^0.40.0",
+		"@biomejs/biome": "^2.5.0",
 		"@types/react": "^19.2.17",
-		"astro": "6.4.4",
+		"astro": "6.4.8",
 		"marked": "^18.0.5",
 		"remark-frontmatter": "^5.0.0",
 		"typescript": "^6.0.3"
