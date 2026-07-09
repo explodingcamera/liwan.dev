@@ -3,8 +3,8 @@
 	"assist": {
 		"enabled": true,
 		"actions": {
-			"recommended": true,
-			"source": { "recommended": true, "organizeImports": "off" }
+			"preset": "recommended",
+			"source": { "preset": "recommended", "organizeImports": "off" }
 		}
 	},
 	"formatter": {
@@ -14,7 +14,8 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true,
+			"preset": "recommended",
+			"a11y": { "noSvgWithoutTitle": "off" },
 			"suspicious": {
 				"noArrayIndexKey": "off",
 				"noDuplicateProperties": "off"
