@@ -85,10 +85,10 @@ const starlightConfig = starlight({
 			label: "Collected Data",
 			slug: "collected-data",
 		},
-		{
-			label: "Comparison",
-			slug: "comparison",
-		},
+		// {
+		// 	label: "Comparison",
+		// 	slug: "comparison",
+		// },
 	],
 });
 
