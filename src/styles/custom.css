@@ -1,10 +1,10 @@
 :root {
 	--sl-content-width: 50rem;
 	--sl-font:
-		"Stack Sans Text Variable", system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, Helvetica,
-		Arial, "Helvetica Neue", sans-serif;
+		"Google Sans Flex Variable", system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+		Helvetica, Arial, "Helvetica Neue", sans-serif;
 	--sl-font-display:
-		"Stack Sans Headline Variable", system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+		"Google Sans Flex Variable", system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
 		Helvetica, Arial, "Helvetica Neue", sans-serif;
 }
 

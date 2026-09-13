@@ -20,33 +20,28 @@ const { entry } = Astro.locals.starlightRoute;
   <div class="imprint sl-flex">
     {(entry.data.template !== "doc") && (
       <h2>
-        <Image src="/favicon.svg" alt="Liwan Logo" width="20" height="20" />
-        Liwan - Lightweight Analytics</h2>
+        <Image src="/favicon.svg" alt="liwan logo" width="20" height="20" />
+        liwan - Self-hosted, privacy-first web analytics
+      </h2>
       <a target="_blank" href="mailto:hi@liwan.dev">
         hi@liwan.dev
       </a>
     )}
     <div>
       <a
-      target="_blank"
-      href="https://henrygressmann.de/impressum"
+        target="_blank"
+        href="https://henrygressmann.de/impressum"
       >
-        imprint</a> /
+        imprint
+      </a>
+      <span aria-hidden="true"> / </span>
       <a
-      target="_blank"
-      href="https://henrygressmann.de/privacy"
+        target="_blank"
+        href="https://henrygressmann.de/privacy"
       >
         privacy policy
       </a>
     </div>
-  {(entry.data.template !== "doc") && (
-    <a
-      target="_blank"
-      href="https://henrygressmann.de"
-    >
-      created by Henry Gressmann
-    </a>
-  )}
   </div>
 </footer>
 
@@ -72,14 +67,14 @@ const { entry } = Astro.locals.starlightRoute;
     flex-direction: column;
     gap: 0.1em;
 
-    h2{
+    h2 {
       display: flex;
       align-items: center;
       gap: 0.3em;
     }
 
     a {
-      font-size: 1re.5m;
+      font-size: 1rem;
       color: var(--sl-color-gray-3);
       &:hover {
         color: var(--sl-color-white);

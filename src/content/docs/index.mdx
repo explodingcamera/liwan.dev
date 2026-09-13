@@ -1,11 +1,11 @@
 ---
-title: Privacy-Friendly Web&nbsp;Analytics
-description: Liwan is a lightweight, self-hosted web analytics platform. No cookies, no cross-site tracking, no persistent identifiers.
+title: Self-hosted, privacy-first web&nbsp;analytics
+description: Self-hosted, privacy-first web analytics with no tracking cookies or cross-site tracking.
 template: splash
 hero:
   tagline: |
-    Liwan is an <a target="_blank" href="https://github.com/explodingcamera/liwan">open source</a> web analytics platform you can run yourself.
-    A single binary you can run on your server, no cookies, no cross-site tracking, no persistent identifiers.
+    Understand your traffic without sending analytics data to another company.
+    Run liwan as a single binary or Docker container, with no additional services to manage.
   actions:
     - text: Get started
       link: /getting-started
@@ -24,52 +24,48 @@ import img2 from "./../../assets/images/liwan-desktop.png";
 
 <div className="hero-images">
   <a href="https://demo.liwan.dev/p/liwan.dev">
-    <img className="hero-image" src={img.src} alt="Liwan dashboard" />
+    <img className="hero-image" src={img.src} alt="liwan dashboard" />
   </a>
   <a href="https://demo.liwan.dev/p/liwan.dev">
-    <img className="hero-image" src={img2.src} alt="Liwan dashboard" />
+    <img className="hero-image" src={img2.src} alt="liwan dashboard" />
   </a>
 </div>
 
 <CardGrid>
-  <Card title="Quick setup">
+  <Card title="Understand your traffic">
     <p>
-      Get started with a <b>single, self-contained binary</b>. No database or
-      complex setup required. The tracking script is a small snippet that works
-      with any website.
+      See your most-visited pages, traffic sources, and changes over time. The
+      dashboard updates automatically and filters bots by default.
     </p>
   </Card>
-  <Card title="Privacy-friendly">
+  <Card title="Easy to self-host">
     <p>
-      Liwan avoids cookies, cross-site tracking, and persistent identifiers.{" "}
-      <b>All data is stored on your server.</b> See [what data Liwan
-      collects](/collected-data/) and [cookie banner
-      considerations](/guides/cookie-banners/).
+      Run liwan as a <b>single binary or Docker container</b>. The dashboard and
+      database are built in, with no additional services to manage.
     </p>
   </Card>
-  <Card title="Lightweight">
+  <Card title="Privacy first">
     <p>
-      You can run Liwan on a cheap VPS, your old Mac mini, or even a Raspberry
-      Pi. Written in Rust and using tokio for async I/O, Liwan is{" "}
-      <b>fast and efficient</b>.
+      No tracking cookies or cross-site tracking. <b>Your analytics data stays
+      on your server.</b> See [what liwan collects](/collected-data/).
     </p>
   </Card>
-  <Card title="Open Source">
+  <Card title="Collect only what you need">
     <p>
-      Fully open source and available under a permissive license (Apache 2.0).
-      You can change, extend, and contribute to the codebase.
+      Choose what to collect and how long to keep it. Configure location detail,
+      campaign attribution, visitor grouping, and session metrics independently.
     </p>
   </Card>
-  <Card title="Clear traffic data">
+  <Card title="Lightweight tracking">
     <p>
-      See page views, visitor groups, referrers, and more. Liwan filters obvious
-      bots and crawlers by default.
+      Add a small tracking script with one line of HTML. It works with any
+      framework or CMS.
     </p>
   </Card>
-  <Card title="Real-time analytics">
+  <Card title="Single sign-on">
     <p>
-      See your website's traffic in <b>real-time</b>. Liwan updates the
-      dashboard automatically as new visitors come in.
+      Manage accounts with Google Workspace, Microsoft Entra ID, or an OpenID
+      Connect provider such as Keycloak or Dex. [Configure SSO](/guides/authentication/).
     </p>
   </Card>
 </CardGrid>

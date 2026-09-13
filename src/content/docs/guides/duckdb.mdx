@@ -1,6 +1,6 @@
 ---
-title: Tweaking DuckDB
-description: How to tweak DuckDB for better performance
+title: Configuring DuckDB
+description: Configure DuckDB memory and thread limits.
 ---
 
 import { Aside } from "@astrojs/starlight/components";
@@ -11,14 +11,14 @@ import { Aside } from "@astrojs/starlight/components";
 </Aside>
 
 
-DuckDB is the embedded OLAP database used by Liwan. It is fast out of the box, but you can tune memory and thread limits for smaller servers or unusual workloads.
+DuckDB is the embedded OLAP database used by liwan. The defaults suit most deployments, but you can adjust memory and thread limits for smaller servers or unusual workloads.
 
 By default, DuckDB can use up to 80% of system memory and all available CPU cores. That is usually fine, but resource-constrained systems may need lower limits.
 
 ## Memory Limit
 
 The memory limit of DuckDB can be set using the `LIWAN_DUCKDB_MEMORY_LIMIT` environment variable or `duckdb.memory_limit` in the configuration file.
-At an absolute minimum, DuckDB requires 128MB of memory per thread. For better performance, DuckDB recommends around 5GB per thread. Try lowering the thread count before lowering the memory limit.
+DuckDB documents approximately 125 MB per thread as a minimum rule of thumb and recommends 1-4 GB per thread for typical workloads. Reduce the thread count before setting a very low memory limit.
 
 ## Thread Limit
 
@@ -27,4 +27,4 @@ By default, DuckDB uses all available CPU cores.
 
 ## Disk Usage
 
-For large queries that do not fit in memory, DuckDB can spill intermediate results to disk. Use fast local disks and avoid network storage when possible.
+For large queries that do not fit in memory, DuckDB can spill intermediate results to disk. Use local storage for read-write database workloads. Consult DuckDB's storage guidance before using network-attached storage.

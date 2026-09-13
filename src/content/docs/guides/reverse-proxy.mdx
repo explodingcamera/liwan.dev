@@ -4,66 +4,79 @@ title: Setting up a Reverse Proxy
 
 import { Aside, Steps } from "@astrojs/starlight/components";
 
-When exposing Liwan to the public internet, a reverse proxy is a convenient way to handle HTTPS and keep Liwan itself on a private or local address. This guide uses Caddy.
-
-Other common choices include [Nginx](https://nginx.org/), [Traefik](https://traefik.io/traefik/), and [HAProxy](https://www.haproxy.org/).
-
+A reverse proxy can provide HTTPS and route public traffic to liwan while liwan listens on a local address. This guide uses Caddy. Other options include [Nginx](https://nginx.org/), [Traefik](https://traefik.io/traefik/), and [HAProxy](https://www.haproxy.org/).
 
 ## Setting up Caddy
 
-<Aside type="caution" title="Firewall Configuration">
-  Depending on your setup, you might want to configure your firewall to only
-  allow incoming traffic on ports `80` and `443` from the internet, as Liwan
-  listens on all interfaces by default. A simple way to do this on many Linux
-  distributions is using `ufw`, check the [official
-  documentation](https://help.ubuntu.com/community/UFW) for more information.
+<Aside type="caution" title="Firewall configuration">
+  Allow public access to ports `80` and `443`, and restrict direct access to
+  liwan on port `9042`.
 </Aside>
 
 <Steps>
 
-1.  **Install Caddy**\
-    First, install Caddy on your server. You can download the latest version from the [official website](https://caddyserver.com/download). Depending on how you install Caddy, you may need to set up a service to run it in the background.
+1. **Install Caddy**
 
-2.  **Configure Caddy**\
-    A basic Caddy configuration file might look like this:
+   Install Caddy using a supported package or the [official download](https://caddyserver.com/download). Configure it to run as a service.
 
-    ```Caddyfile
-    # /etc/caddy/Caddyfile
-    liwan.example.com {
-        reverse_proxy localhost:9042
-        tls you@example.com
-    }
-    ```
+2. **Configure Caddy**
 
-    This tells Caddy to serve `liwan.example.com`, proxy requests to Liwan on port `9042`, and use Let's Encrypt for certificates.
+   Create a basic Caddy configuration:
 
-3.  **Start Caddy**\
-    Again, depending on your setup, you may need to start Caddy manually or set it up as a service.
-    See the [Keep Caddy Running](https://caddyserver.com/docs/running) section of the Caddy documentation for more information.
+   ```Caddyfile
+   # /etc/caddy/Caddyfile
+   liwan.example.com {
+       reverse_proxy localhost:9042
+   }
+   ```
 
-    Once Caddy is running, you should be able to access Liwan by visiting `https://liwan.example.com`.
+   Caddy routes requests to liwan on port `9042` and automatically manages the TLS certificate.
+
+3. **Start Caddy**
+
+   Start or restart the Caddy service. You can then open `https://liwan.example.com`.
 
 </Steps>
 
 ## Client IP Headers
 
-Liwan uses the request IP for visitor identification and optional GeoIP lookups.
-When Liwan is behind a reverse proxy, the proxy should forward the original client IP.
+liwan uses the client IP for visitor grouping, optional GeoIP lookup, and rate limiting. In 1.7, it accepts `X-Forwarded-For` from IPv4 and IPv6 loopback proxies by default. The Caddy configuration above works with these defaults because Caddy connects from loopback.
 
-Liwan checks these headers (in this order) before falling back to the socket source IP:
+<Aside type="caution" title="Upgrading to 1.7">
+  If your proxy connects from another host, container, or network, add the
+  proxy's address to `trusted_proxies`. Otherwise, an untrusted private proxy
+  leaves events without a usable client IP. This affects visitor grouping,
+  MaxMind lookup, page-exit tracking, and login and event rate limits.
+</Aside>
 
-- `cf-connecting-ip`
-- `fly-client-ip`
-- `true-client-ip`
-- `x-real-ip`
-- `cloudfront-viewer-address`
-- `x-forwarded-for`
-- `forwarded`
+For a proxy on a Docker network, use the network's actual subnet. Docker's default bridge network is commonly `172.17.0.0/16`:
 
-For multi-hop header formats (`x-forwarded-for` and `forwarded`), Liwan currently uses the last entry in the list.
+```toml
+trusted_headers = ["X-Forwarded-For"]
+trusted_proxies = ["172.17.0.0/16"]
+```
 
-Forwarded IP headers can be spoofed if Liwan receives them directly from the public internet. Only trust forwarding headers from infrastructure you control, such as your reverse proxy.
+Run `docker network inspect <network>` to check the subnet. Docker can select a different range, especially when other networks already exist or the daemon uses custom address pools.
 
-If possible, configure that proxy to strip incoming client-provided forwarding headers and set its own canonical values.
+You can set `trusted_proxies = "*"` when only trusted systems can connect to liwan, such as within an isolated container network. Do not use `*` when clients can reach liwan directly because they could spoof forwarding headers and bypass per-IP rate limits.
 
-For Caddy, the default `reverse_proxy` setup already forwards `X-Forwarded-For` and related headers.
+Provider presets select the appropriate client IP header:
+
+| Preset | Header |
+| --- | --- |
+| `akamai` | `True-Client-IP` |
+| `cloudflare` | `CF-Connecting-IP` |
+| `cloudfront` | `CloudFront-Viewer-Address` |
+| `fastly` | `Fastly-Client-IP` |
+| `fly` | `Fly-Client-IP` |
+
+For example:
+
+```toml
+trusted_headers = "cloudflare"
+trusted_proxies = ["203.0.113.10", "2001:db8:1234::/48"]
+```
+
+Replace these documentation ranges with the actual proxy addresses you trust. For multi-hop `X-Forwarded-For` and `Forwarded` values, liwan walks from the nearest proxy toward the client and stops at the first untrusted address.
+
+See the [Configuration Reference](/reference/configuration/#client-ip-headers) for custom headers and all defaults.

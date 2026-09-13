@@ -1,19 +1,19 @@
 ---
-title: Running Liwan as a Service
+title: Running liwan as a Service
 ---
 
 import { Steps, Tabs, TabItem } from "@astrojs/starlight/components";
 
-Liwan can run as a service so it starts automatically when your server boots. This page shows examples for systemd and OpenRC.
+liwan can run as a service so it starts automatically when your server boots. This page shows examples for systemd and OpenRC.
 
 <Tabs syncKey="init"><TabItem icon="rocket" label="systemd">
 <Steps>
 1.  **Creating the service**\
-    To run Liwan as a service using `systemd`, create a new service file in `/etc/systemd/system/liwan.service` with the following content:
+    Create `/etc/systemd/system/liwan.service`:
     ```ini
     # /etc/systemd/system/liwan.service
     [Unit]
-    Description=Liwan Web Analytics
+    Description=liwan web analytics
     After=network.target
 
     [Service]
@@ -43,21 +43,21 @@ Liwan can run as a service so it starts automatically when your server boots. Th
 
 3.  **Checking the status**\
     You can now check the status of the service using `systemctl status liwan` and view the logs using `journalctl -u liwan`.
-    If this is the first time you are running Liwan, you can find a link to set up your account in the logs.
+    The logs contain the initial setup URL.
 
 </Steps></TabItem>
 <TabItem icon="rocket" label="OpenRC">
 <Steps>
 
 1. **Creating the service**\
-   To run Liwan as a service using `OpenRC`, create a new service script in `/etc/init.d/liwan` with the following content:
+   Create `/etc/init.d/liwan`:
 
     ```sh
     #/etc/init.d/liwan
     #!/sbin/openrc-run
 
-    name="Liwan"
-    description="Liwan Web Analytics"
+    name="liwan"
+    description="liwan web analytics"
 
     command_user="yourusername"
     command="/home/${command_user}/.local/bin/liwan"
@@ -98,7 +98,7 @@ Liwan can run as a service so it starts automatically when your server boots. Th
 
 3. **Checking the status**\
    You can now check the status of the service using `rc-service liwan status` and view the logs using `tail -f /var/log/liwan/liwan.log`.
-   If this is the first time you are running Liwan, you can find a link to set up your account in the logs.
+   The logs contain the initial setup URL.
 
 </Steps>
 </TabItem></Tabs>

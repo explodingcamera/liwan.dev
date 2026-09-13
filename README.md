@@ -1,4 +1,4 @@
-# liwan.dev - Liwan Documentation
+# liwan.dev - liwan documentation
 
 ## License
 

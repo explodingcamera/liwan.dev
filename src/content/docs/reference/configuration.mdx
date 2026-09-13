@@ -2,71 +2,128 @@
 title: Configuration Reference
 ---
 
-Liwan can be configured with a TOML configuration file or environment variables.
+liwan can be configured with a TOML configuration file or environment variables.
 
-By default, Liwan looks for `liwan.config.toml` in the current directory, then `~/.config/liwan/liwan.config.toml` on Linux/macOS. You can also pass `--config` or set `LIWAN_CONFIG`.
+On Linux and macOS, liwan checks the standard XDG configuration directory and the current directory for `liwan.config.toml`. Pass `--config PATH` or set `LIWAN_CONFIG` to use a specific file.
 
-To generate an example configuration file, run `liwan generate-config` or `liwan generate-config -o OUTPUT_PATH`.
+Run `liwan generate-config` or `liwan generate-config -o OUTPUT_PATH` to generate an example.
 
 ```toml
 # liwan.config.toml
-# The base URL of the Liwan instance
-base_url="http://localhost:9042"
+base_url = "http://localhost:9042"
+listen = "0.0.0.0:9042"
 
-# The address to listen on (http)
-listen="0.0.0.0:9042"
+# disable_favicons = true
+# data_dir = "./liwan-data"
 
-# Disable fetching favicons for websites using DuckDuckGo's favicon service
-# disable_favicons=true
+# Client IP headers to try in order.
+# Presets: akamai, cloudflare, cloudfront, fastly, fly.
+trusted_headers = ["X-Forwarded-For"]
 
-# # Folder to store the database in (Will be created if it doesn't exist)
-# # defaults to $HOME/.local/share/liwan/data on Linux/macOS
-# # defaults to ./liwan-data on other platforms
-# data_dir="./liwan-data"
+# Direct proxy addresses or networks allowed to supply trusted headers.
+trusted_proxies = ["127.0.0.1/8", "::1/128"]
 
-# Trusted client IP headers (used in order).
-# Defaults to all supported headers.
-# trusted_headers=["cf-connecting-ip", "fly-client-ip", "true-client-ip", "x-real-ip", "cloudfront-viewer-address", "x-forwarded-for", "forwarded"]
-# You can also include custom headers. Names are case-insensitive.
-# trusted_headers=["X-Forwarded-For", "X-Client-IP"]
+# Hour in the server's local timezone at which visitor-group salts rotate.
+visitor_group_rotation_hour = 4
 
-# Trusted reverse proxies (IP or CIDR).
-# Empty by default, meaning all proxies are trusted.
-# trusted_proxies=["127.0.0.1", "10.0.0.0/8"]
-
-# Whether to use forwarded IP headers at all.
-# If false, only the direct peer IP is used.
-# use_forward_headers=true
-
-# GeoIp settings (Optional)
 [geoip]
-# # MaxMind account ID and license key
-# # Required to automatically download the database and keep it up to date
-# maxmind_account_id="MY_ACCOUNT_ID"
-# maxmind_license_key="MY_LICENSE_KEY"
-# maxmind_edition="GeoLite2-City"
+# maxmind_account_id = "MY_ACCOUNT_ID"
+# maxmind_license_key = "MY_LICENSE_KEY"
+# maxmind_edition = "GeoLite2-City"
+# maxmind_db_path = "/path/to/GeoLite2-City.mmdb"
 
-# # If you don't want to automatically download the database, you can specify a path to a local file.
-# # Otherwise, the database will be downloaded automatically and stored in the data_dir
-# maxmind_db_path="/path/to/GeoLite2-City.mmdb"
+# Trusted proxy location headers to try in order.
+# Presets: akamai, cloudflare, cloudfront, netlify, vercel.
+# headers = ["cloudflare", "vercel"]
+
+[duckdb]
+# memory_limit = "1GB"
+# threads = 2
+
+[limits]
+report_timeout_seconds = 30
+report_max_concurrency = 8
+report_max_range_days = 3660
+report_max_dimension_results = 1000
+report_max_datapoints = 2000
+report_max_filters = 20
+report_max_filter_value_bytes = 2048
 ```
 
 ## Configuration Options
 
-| TOML Key                    | Environment Variable        | Default               |
-| --------------------------- | --------------------------- | --------------------- |
-| `base_url`                  | `LIWAN_BASE_URL`            | `http://localhost:9042` |
-| `data_dir`                  | `LIWAN_DATA_DIR`            | platform data dir[^data-dir] |
-| `listen`                    | `LIWAN_LISTEN`              | `0.0.0.0:9042`        |
-| `disable_favicons`          | `LIWAN_DISABLE_FAVICONS`    | `false`               |
-| `trusted_headers`           | `LIWAN_TRUSTED_HEADERS`     | all supported headers |
-| `trusted_proxies`           | `LIWAN_TRUSTED_PROXIES`     | empty (all trusted)   |
-| `use_forward_headers`       | `LIWAN_USE_FORWARD_HEADERS` | `true`                |
-| `geoip.maxmind_account_id`  | `LIWAN_MAXMIND_ACCOUNT_ID`  | (none)                |
-| `geoip.maxmind_license_key` | `LIWAN_MAXMIND_LICENSE_KEY` | (none)                |
-| `geoip.maxmind_edition`     | `LIWAN_MAXMIND_EDITION`     | `GeoLite2-City`       |
-| `geoip.maxmind_db_path`     | `LIWAN_MAXMIND_DB_PATH`     | (none)                |
-| `duckdb.memory_limit`       | `LIWAN_DUCKDB_MEMORY_LIMIT` | (none)                |
-| `duckdb.threads`            | `LIWAN_DUCKDB_THREADS`      | (core count)          |
+| TOML key | Environment variable | Default |
+| --- | --- | --- |
+| `base_url` | `LIWAN_BASE_URL` | `http://localhost:9042` |
+| `data_dir` | `LIWAN_DATA_DIR` | Platform data directory[^data-dir] |
+| `listen` | `LIWAN_LISTEN` | `0.0.0.0:9042` |
+| `disable_favicons` | `LIWAN_DISABLE_FAVICONS` | `false` |
+| `trusted_headers` | `LIWAN_TRUSTED_HEADERS` | `X-Forwarded-For` |
+| `trusted_proxies` | `LIWAN_TRUSTED_PROXIES` | `127.0.0.1/8`, `::1/128` |
+| `visitor_group_rotation_hour` | `LIWAN_VISITOR_GROUP_ROTATION_HOUR` | `4` |
+| `geoip.headers` | `LIWAN_GEOIP_HEADERS` | Empty |
+| `geoip.maxmind_account_id` | `LIWAN_MAXMIND_ACCOUNT_ID` | Empty |
+| `geoip.maxmind_license_key` | `LIWAN_MAXMIND_LICENSE_KEY` | Empty |
+| `geoip.maxmind_edition` | `LIWAN_MAXMIND_EDITION` | `GeoLite2-City` |
+| `geoip.maxmind_db_path` | `LIWAN_MAXMIND_DB_PATH` | Empty |
+| `duckdb.memory_limit` | `LIWAN_DUCKDB_MEMORY_LIMIT` | Empty |
+| `duckdb.threads` | `LIWAN_DUCKDB_THREADS` | CPU core count |
+| `limits.report_timeout_seconds` | `LIWAN_LIMITS_REPORT_TIMEOUT_SECONDS` | `30` |
+| `limits.report_max_concurrency` | `LIWAN_LIMITS_REPORT_MAX_CONCURRENCY` | `8` |
+| `limits.report_max_range_days` | `LIWAN_LIMITS_REPORT_MAX_RANGE_DAYS` | `3660` |
+| `limits.report_max_dimension_results` | `LIWAN_LIMITS_REPORT_MAX_DIMENSION_RESULTS` | `1000` |
+| `limits.report_max_datapoints` | `LIWAN_LIMITS_REPORT_MAX_DATAPOINTS` | `2000` |
+| `limits.report_max_filters` | `LIWAN_LIMITS_REPORT_MAX_FILTERS` | `20` |
+| `limits.report_max_filter_value_bytes` | `LIWAN_LIMITS_REPORT_MAX_FILTER_VALUE_BYTES` | `2048` |
 
-[^data-dir]: On Linux/macOS this defaults to `$XDG_DATA_HOME/liwan/data` or `$HOME/.local/share/liwan/data`. On other platforms it defaults to `./liwan-data`.
+[^data-dir]: On Linux and macOS, this defaults to `$XDG_DATA_HOME/liwan/data` or `$HOME/.local/share/liwan/data`. On other platforms, it defaults to `./liwan-data`.
+
+## Client IP Headers
+
+liwan accepts forwarded client IPs only from the direct addresses and CIDR ranges in `trusted_proxies`. Headers from other peers are ignored. The loopback defaults work when the reverse proxy connects from the same host.
+
+When a reverse proxy on the host or in another container connects to liwan through a Docker bridge, add the bridge subnet to `trusted_proxies`. Docker's default bridge network is commonly `172.17.0.0/16`, but check the actual subnet with `docker network inspect <network>`.
+
+Set `trusted_proxies = "*"` or `LIWAN_TRUSTED_PROXIES=*` to trust forwarding headers from every direct peer. Use this only when network access to liwan is restricted to trusted systems, such as an isolated Compose network with the published port bound to host loopback. Otherwise, clients could spoof their IP addresses and bypass per-IP rate limits.
+
+Set `trusted_headers = []` or `trusted_proxies = []` to disable forwarded client IP resolution. Environment variables accept comma-separated values.
+
+Client IP presets map to these headers:
+
+| Preset | Header |
+| --- | --- |
+| `akamai` | `True-Client-IP` |
+| `cloudflare` | `CF-Connecting-IP` |
+| `cloudfront` | `CloudFront-Viewer-Address` |
+| `fastly` | `Fastly-Client-IP` |
+| `fly` | `Fly-Client-IP` |
+
+You can also specify standard or custom header names. Names are case-insensitive, and underscores are normalized to hyphens. For `X-Forwarded-For` and `Forwarded`, liwan walks the address chain from the nearest proxy toward the client while each hop is trusted.
+
+Authentication and event rate limits use the same client IP resolution. See [Setting up a Reverse Proxy](/guides/reverse-proxy/) for deployment examples.
+
+## GeoIP Headers
+
+liwan can read country and city values supplied by a trusted proxy:
+
+```toml
+[geoip]
+headers = [
+  "cloudflare",
+  { country = "X-Country", city = "X-City" },
+]
+```
+
+| Preset | Country source | City source |
+| --- | --- | --- |
+| `akamai` | `country_code` in `X-Akamai-Edgescape` | `city` in `X-Akamai-Edgescape` |
+| `cloudflare` | `CF-IPCountry` | `CF-IPCity` |
+| `cloudfront` | `CloudFront-Viewer-Country` | `CloudFront-Viewer-City` |
+| `netlify` | `/country/code` in `X-NF-Geo` | `/city` in `X-NF-Geo` |
+| `vercel` | `X-Vercel-IP-Country` | `X-Vercel-IP-City` |
+
+Sources are checked in order and country and city are filled independently. MaxMind results take precedence for each value when available. GeoIP headers are ignored unless the direct peer matches `trusted_proxies`.
+
+## Report Limits
+
+Report limits bound dashboard query resource use. `report_timeout_seconds` covers both waiting for a query slot and running the query. `report_max_concurrency` must be between `1` and `10`; all other report limits must be greater than zero.

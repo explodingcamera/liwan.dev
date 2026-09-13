@@ -2,56 +2,63 @@
 title: GeoIP Lookup
 ---
 
-Liwan can optionally use the visitor's IP address during request processing to derive country and city. The IP address itself is not stored.
+liwan can derive a visitor's country and city during request processing. The IP address itself is not stored.
 
-To enable GeoIP, either configure MaxMind credentials or provide a local MaxMind-compatible `.mmdb` file. See the [Configuration Reference](/reference/configuration) for all options.
+Location data can come from an automatically maintained MaxMind database, a local MaxMind-compatible `.mmdb` file, or headers supplied by a trusted proxy. MaxMind values take precedence over header values when available.
 
-MaxMind is the officially supported provider. If you use a different provider, make sure it exports a compatible `.mmdb` file.
+## Trusted Proxy Headers
 
-GeoIP lookups use extra CPU and memory, which can matter on low-end hardware.
-
-## MaxMind GeoIP Database
-
-### Creating a MaxMind Account
-
-For country and city lookups, the free offering from MaxMind is sufficient. You can sign up for a free account on the [MaxMind website](https://www.maxmind.com/geoip/signup).
-Once you have created an account, you can go to the [Manage License Keys](https://www.maxmind.com/en/accounts/current/license-key) page to generate a license key and find your account ID.
-
-### Example Configuration
-
-To download the GeoIP database automatically, add:
+Use a provider preset when your reverse proxy already supplies location headers:
 
 ```toml
-# liwan.config.toml
 [geoip]
-maxmind_account_id="MY_ACCOUNT_ID"
-maxmind_license_key="MY_LICENSE_KEY"
-maxmind_edition="GeoLite2-City"
+headers = "cloudflare"
 ```
 
-Replace `MY_ACCOUNT_ID` and `MY_LICENSE_KEY` with your MaxMind account ID and license key, respectively.
-
-The next time you start Liwan, it will download the GeoIP database and periodically check for updates.
-
-If you prefer to use a local GeoIP database file, you can specify the path to the file in the configuration:
+Multiple presets and custom mappings can be evaluated in order:
 
 ```toml
-# liwan.config.toml
 [geoip]
-maxmind_db_path="/path/to/GeoLite2-City.mmdb"
+headers = [
+  "cloudflare",
+  { country = "X-Country", city = "X-City" },
+]
 ```
 
-## Alternative Providers
+| Preset | Country source | City source |
+| --- | --- | --- |
+| `akamai` | `country_code` in `X-Akamai-Edgescape` | `city` in `X-Akamai-Edgescape` |
+| `cloudflare` | `CF-IPCountry` | `CF-IPCity` |
+| `cloudfront` | `CloudFront-Viewer-Country` | `CloudFront-Viewer-City` |
+| `netlify` | `/country/code` in `X-NF-Geo` | `/city` in `X-NF-Geo` |
+| `vercel` | `X-Vercel-IP-Country` | `X-Vercel-IP-City` |
 
-You can use other GeoIP providers by keeping a local `.mmdb` file updated on disk.
-Liwan automatically reloads the database file when it changes, so a cron job that periodically replaces the file is enough.
+liwan accepts these headers only when the direct peer matches [`trusted_proxies`](/reference/configuration/#client-ip-headers).
 
-Set `geoip.maxmind_db_path` to the same destination path used by the script.
+## MaxMind Database
 
-Some options you can evaluate:
+MaxMind provides GeoLite2 country and city databases. Follow the [MaxMind account setup guide](https://support.maxmind.com/knowledge-base/articles/create-a-maxmind-account), then use the account dashboard to generate a license key and find your account ID.
+
+To let liwan download and update the database:
+
+```toml
+[geoip]
+maxmind_account_id = "MY_ACCOUNT_ID"
+maxmind_license_key = "MY_LICENSE_KEY"
+maxmind_edition = "GeoLite2-City"
+```
+
+To use a local compatible database instead:
+
+```toml
+[geoip]
+maxmind_db_path = "/path/to/GeoLite2-City.mmdb"
+```
+
+liwan reloads the database when the file changes. A scheduled job can therefore update a file from another compatible source, including:
 
 - [IP Location DB](https://github.com/sapics/ip-location-db)
 - [IPinfo Lite](https://ipinfo.io/lite)
 - [IPLocate Free Databases](https://www.iplocate.io/free-databases)
 
-When using a third-party source, verify update frequency, data quality, and license terms for your use case.
+Check each source's update schedule, data quality, file compatibility, and licensing information.

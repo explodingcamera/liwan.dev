@@ -4,17 +4,17 @@ title: Single Binary
 
 import { Steps, Tabs, TabItem } from "@astrojs/starlight/components";
 
-The single binary is the simplest way to run Liwan. It is self-contained and does not require a separate database service.
+The single binary is the simplest way to run liwan. It is self-contained and does not require a separate database service.
 
-Liwan provides pre-built binaries for **Linux (x86_64/ARM64)** and **macOS (ARM64)**. Linux builds are statically linked with musl libc, so they should work on most Linux distributions.
+liwan provides pre-built binaries for **Linux (x86_64/ARM64)** and **macOS (ARM64)**. Linux builds are statically linked with musl libc, so they should work on most Linux distributions.
 
 ## Installation
 
 <Steps>
 
-1. **Download and extract Liwan**
+1. **Download and extract liwan**
 
-   These examples install Liwan into `~/.local/bin`. Replace that path if you prefer a different install directory.
+   These examples install liwan into `~/.local/bin`. Replace that path if you prefer a different install directory.
 
    <Tabs syncKey="os">
    <TabItem label="Linux x86_64">
@@ -79,7 +79,7 @@ Liwan provides pre-built binaries for **Linux (x86_64/ARM64)** and **macOS (ARM6
    </TabItem>
    </Tabs>
 
-2. **Add Liwan to your PATH**
+2. **Add liwan to your PATH**
 
    If `~/.local/bin` is not already in your PATH, add it to your shell profile:
 
@@ -87,7 +87,7 @@ Liwan provides pre-built binaries for **Linux (x86_64/ARM64)** and **macOS (ARM6
    export PATH="$PATH:$HOME/.local/bin"
    ```
 
-3. **Start Liwan**
+3. **Start liwan**
 
    ```sh
    liwan
@@ -96,11 +96,11 @@ Liwan provides pre-built binaries for **Linux (x86_64/ARM64)** and **macOS (ARM6
    The first run prints a setup URL. Open it to create your first user, project, and entity.
 
    ```plaintext "http://localhost:9042/setup?t=1234567890"
-   It looks like you're running Liwan for the first time!
+   It looks like you're running liwan for the first time!
    You can get started by visiting: http://localhost:9042/setup?t=1234567890
    To see all available commands, run `liwan --help`
    ```
 
 </Steps>
 
-For production, see [Running Liwan as a Service](/guides/service) to start Liwan automatically on boot.
+For production, see [Running liwan as a Service](/guides/service) to start liwan automatically on boot.

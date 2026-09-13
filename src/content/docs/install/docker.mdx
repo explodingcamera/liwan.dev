@@ -1,24 +1,26 @@
 ---
-title: Installing Liwan Using Docker
+title: Installing liwan Using Docker
 ---
 
-To run Liwan with Docker:
+To run liwan with Docker:
 
 ```sh "127.0.0.1:9042" "https://a.example.com"
 docker run -d --name liwan \
   -p 127.0.0.1:9042:9042 \
   -v liwan-data:/data \
   -e LIWAN_BASE_URL=https://a.example.com \
-  ghcr.io/explodingcamera/liwan:1.6
+  -e LIWAN_TRUSTED_PROXIES=172.17.0.0/16 \
+  ghcr.io/explodingcamera/liwan:1.7
 ```
 
 The important parts are:
 
-- `-p 127.0.0.1:9042:9042` binds Liwan to localhost on port `9042`.
-- `-v liwan-data:/data` stores Liwan data in a persistent Docker volume.
-- `LIWAN_BASE_URL` should match the public URL where your Liwan instance will be reachable.
+- `-p 127.0.0.1:9042:9042` binds liwan to localhost on port `9042`.
+- `-v liwan-data:/data` stores liwan data in a persistent Docker volume.
+- Set `LIWAN_BASE_URL` to the instance's public URL.
+- `LIWAN_TRUSTED_PROXIES` allows a reverse proxy on the host to supply the client IP through Docker's bridge network.
 
-This starts Liwan on `127.0.0.1:9042` with persistent data in the `liwan-data` Docker volume. For a public instance, you will usually add a reverse proxy for HTTPS and public routing. See [Setting up a Reverse Proxy](/guides/reverse-proxy) and the [Configuration Reference](/reference/configuration).
+For a public instance, [add a reverse proxy for HTTPS and public routing](/guides/reverse-proxy/). Docker's default bridge network is commonly `172.17.0.0/16`, as shown above. Check the actual subnet with `docker network inspect bridge` and update `LIWAN_TRUSTED_PROXIES` when it differs. See the [trusted proxy guidance](/guides/reverse-proxy/#client-ip-headers).
 
 To view the logs (and find the setup URL), you can run:
 
@@ -27,7 +29,7 @@ docker logs liwan
 ```
 
 ```plaintext "http://localhost:9042/setup?t=1234567890" "liwan --help"
-It looks like you're running Liwan for the first time!
+It looks like you're running liwan for the first time!
 You can get started by visiting: http://localhost:9042/setup?t=1234567890
 To see all available commands, run `liwan --help`
 ```

@@ -1,0 +1,47 @@
+---
+title: Tracking Script
+description: Add the browser tracker and configure page-exit tracking.
+---
+
+Add the script shown for your entity in the liwan dashboard:
+
+```html
+<script
+  type="module"
+  src="https://liwan.example.com/script.js"
+  data-entity="example"
+></script>
+```
+
+The server-hosted script always matches the installed liwan version. If you use the `liwan-tracker` npm package, update it when you update the server.
+
+## Page Exits
+
+liwan 1.7 enables page-exit tracking for pageviews by default. When the page becomes hidden, the browser sends a best-effort request that records the final page duration. This updates the matching pageview and does not create another pageview.
+
+Disable the follow-up request in HTML:
+
+```html
+<script
+  type="module"
+  src="https://liwan.example.com/script.js"
+  data-entity="example"
+  data-exit="false"
+></script>
+```
+
+Or disable it with the npm tracker:
+
+```ts
+import { trackPageviews } from "liwan-tracker";
+
+trackPageviews({
+  endpoint: "https://liwan.example.com/api/event",
+  entity: "example",
+  exit: false,
+});
+```
+
+Exit tracking is ignored in server-side environments. The server also ignores exit updates when session metrics are disabled, visitor grouping is random per request, or no usable client IP is available.
+
+Tracker requests send JSON using a CORS-safelisted `text/plain` content type to avoid a preflight request. Custom event clients can continue to send `application/json`.

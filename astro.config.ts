@@ -5,7 +5,7 @@ import Caddyfile from "./src/assets/caddyfile.tmLanguage.json";
 import react from "@astrojs/react";
 
 const starlightConfig = starlight({
-	title: "Liwan",
+	title: "liwan",
 	favicon: "/favicon.svg",
 	head: [
 		{
@@ -31,12 +31,8 @@ const starlightConfig = starlight({
 	logo: {
 		src: "./src/assets/favicon.svg",
 	},
-	customCss: [
-		"@fontsource-variable/stack-sans-headline",
-		"@fontsource-variable/stack-sans-text",
-		"./src/styles/custom.css",
-	],
-	description: "Liwan is a lightweight web analytics tool that respects your users' privacy.",
+	customCss: ["@fontsource-variable/google-sans-flex", "./src/styles/custom.css"],
+	description: "Self-hosted, privacy-first web analytics.",
 	credits: false,
 	social: [
 		{

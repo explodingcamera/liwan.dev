@@ -1,9 +1,7 @@
 ---
 title: Metrics and Dimensions
-description: What each dashboard metric and dimension means in Liwan.
+description: What each dashboard metric and dimension means in liwan.
 ---
-
-Use this page as a quick reference for what you see in the dashboard.
 
 ## Metrics
 
@@ -12,9 +10,7 @@ Use this page as a quick reference for what you see in the dashboard.
 | Total Views          | Total number of pageviews in the selected date range.          |
 | Unique Visitors      | Number of distinct visitor groups in the selected date range.  |
 | Bounce Rate          | Percentage of sessions that had only one pageview.             |
-| Average Time on Site | Average time in seconds between pageviews in the same session.[^avg-time] |
-
-[^avg-time]: Only tracked for sessions with more than one view.
+| Average Time on Site | Average tracked duration in seconds, using the next pageview or a recorded page exit. Durations are limited to 30 minutes. |
 
 ## Dimensions
 
@@ -67,9 +63,9 @@ Entry Page and Exit Page are available when the selected metric is Total Views o
 | Content   | `utm_content` from the page URL.  |
 | Term      | `utm_term` from the page URL.     |
 
-## How Liwan Gets This Data
+## How liwan Gets This Data
 
-1. The tracker sends pageview data (URL, referrer, screen width bucket, and orientation).
+1. The tracker sends pageview data and, when enabled, a best-effort page-exit request.
 2. The server filters bots, extracts UTM fields when enabled, and normalizes incoming values.
-3. If GeoIP is enabled, country and city are added.
+3. If GeoIP is enabled, country and city are added from MaxMind or trusted proxy headers. MaxMind values take precedence when available.
 4. The dashboard aggregates stored events into metrics and dimension tables.

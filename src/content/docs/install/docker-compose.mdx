@@ -1,39 +1,39 @@
 ---
-title: Installing Liwan Using Docker Compose
+title: Installing liwan Using Docker Compose
 ---
 
 Create a `docker-compose.yml` file:
 
 ```yaml
 # docker-compose.yml
-version: "3.8"
-
 services:
   liwan:
-    image: ghcr.io/explodingcamera/liwan:1.6
+    image: ghcr.io/explodingcamera/liwan:1.7
     container_name: liwan
     ports:
-      # Bind Liwan to localhost on port 9042
+      # Bind liwan to localhost on port 9042
       - "127.0.0.1:9042:9042"
     volumes:
-      # Store Liwan data in a persistent Docker volume
+      # Store liwan data in a persistent Docker volume
       - liwan-data:/data
     # See https://liwan.dev/reference/configuration for all configuration options
     environment:
-      # Set the public URL where your Liwan instance will be reachable
+      # Set the public URL where your liwan instance will be reachable
       - LIWAN_BASE_URL=https://a.example.com
+      # Trust the reverse proxy connecting through this isolated deployment
+      - LIWAN_TRUSTED_PROXIES=*
 
 volumes:
   liwan-data:
 ```
 
-Then start Liwan:
+Then start liwan:
 
 ```sh
 docker compose up -d
 ```
 
-This starts Liwan on `127.0.0.1:9042` with persistent data in the `liwan-data` Docker volume. For a public instance, you will usually add a reverse proxy for HTTPS and public routing. See [Setting up a Reverse Proxy](/guides/reverse-proxy).
+For a public instance, [add a reverse proxy for HTTPS and public routing](/guides/reverse-proxy/). The `*` value is appropriate here because liwan is bound to host loopback and the Compose network is isolated. Use the actual proxy address or network instead if other untrusted services can connect to liwan. See the [trusted proxy guidance](/guides/reverse-proxy/#client-ip-headers).
 
 To view the logs (and find the setup URL), you can run:
 
@@ -42,7 +42,7 @@ docker compose logs liwan
 ```
 
 ```plaintext "http://localhost:9042/setup?t=1234567890" "liwan --help"
-It looks like you're running Liwan for the first time!
+It looks like you're running liwan for the first time!
 You can get started by visiting: http://localhost:9042/setup?t=1234567890
 To see all available commands, run `liwan --help`
 ```

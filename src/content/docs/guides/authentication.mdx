@@ -1,0 +1,70 @@
+---
+title: Single Sign-On
+description: Configure Google Workspace, Microsoft Entra ID, or an OpenID Connect provider.
+---
+
+import { Aside, Tabs, TabItem } from "@astrojs/starlight/components";
+
+liwan 1.7 adds single sign-on (SSO) through Google, Microsoft Entra ID, and generic OpenID Connect providers. This is the first release with SSO support. More advanced authentication and account-management features are planned for later releases.
+
+liwan supports one external provider at a time. Password sign-in remains available after SSO is enabled.
+
+<Aside type="caution" title="Keep an administrator account">
+  Keep a working password-based administrator account while configuring and
+  testing SSO.
+</Aside>
+
+## Before You Start
+
+Set [`base_url`](/reference/configuration/#configuration-options) to the public URL of your liwan instance. liwan uses this value to generate the provider callback URL:
+
+```text
+https://liwan.example.com/api/dashboard/auth/external/callback
+```
+
+Register the exact callback URL shown under **Settings > Authentication** with your provider.
+
+## Provider Setup
+
+<Tabs syncKey="sso-provider">
+<TabItem label="Google">
+
+1. Create OAuth credentials for a web application by following [Google's OAuth 2.0 setup instructions](https://developers.google.com/identity/protocols/oauth2/web-server#creatingcred).
+2. Add the callback URL shown by liwan as an authorized redirect URI.
+3. In liwan, open **Settings > Authentication** and select **Google**.
+4. Enter the client ID and client secret.
+5. Optional: set **Google Workspace domain** to allow only accounts managed by that domain.
+
+</TabItem>
+<TabItem label="Microsoft Entra ID">
+
+1. [Register an application in Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app).
+2. Under the **Web** platform, add the callback URL shown by liwan as a redirect URI.
+3. Create a client secret and copy the application client ID, secret, and directory tenant ID.
+4. In liwan, open **Settings > Authentication** and select **Microsoft Entra ID**.
+5. Enter the application client ID, client secret, and directory tenant ID.
+
+Only work or school accounts in the configured tenant can sign in.
+
+</TabItem>
+<TabItem label="OpenID Connect">
+
+1. Create a confidential web client in your OpenID Connect provider. See your provider's documentation, such as [Keycloak's OpenID Connect guide](https://www.keycloak.org/securing-apps/oidc-layers) or [Dex's connector documentation](https://dexidp.io/docs/connectors/).
+2. Add the callback URL shown by liwan as an allowed redirect URI.
+3. In liwan, open **Settings > Authentication** and select **OpenID Connect**.
+4. Enter the sign-in button label, client ID, client secret, and issuer URL.
+
+The issuer must provide OpenID Connect discovery and ID tokens. Issuer URLs must use HTTPS, except for loopback addresses used during local development, and cannot contain a query string or fragment.
+
+</TabItem>
+</Tabs>
+
+## Sign-In Options
+
+- **Allow new users** creates a liwan user after the first successful provider sign-in. New users receive the regular User role and have no project assignments.
+- **Reuse provider session** lets the provider use an existing browser session. Disable it to request the provider's sign-in prompt each time.
+- **Display name** controls the label shown on the external sign-in button.
+
+When automatic user creation is disabled, only external identities that were previously created can sign in. liwan does not automatically link an external identity to a password-based user with the same name.
+
+Save the settings, enable external authentication, then test sign-in in a private browser window before signing out of the administrator account.

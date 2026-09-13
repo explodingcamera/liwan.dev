@@ -2,9 +2,9 @@
 title: Ad Blockers
 ---
 
-Some visitors use content blockers that block analytics scripts by pattern, domain name, or request path. This can make analytics undercount traffic.
+Some visitors use content blockers that block analytics scripts by pattern, domain name, or request path. As a result, reported traffic may be lower than actual traffic.
 
-If you want to reduce accidental blocking:
+To reduce name-based blocking:
 
 - **Use a neutral subdomain**: Names like `analytics.example.com` are more likely to match blocklists. A neutral name such as `a.example.com` or `liwan.example.com` may be less likely to be blocked.
-- **Serve the script from your own domain**: Liwan is self-hosted, so the tracking script is already served from infrastructure you control.
+- **Use a first-party domain**: Host liwan under a subdomain of your site so the tracker uses a domain you control.
