@@ -15,6 +15,7 @@ listen = "0.0.0.0:9042"
 
 # disable_favicons = true
 # data_dir = "./liwan-data"
+# session_duration = "14 days"
 
 # Client IP headers to try in order.
 # Presets: akamai, cloudflare, cloudfront, fastly, fly.
@@ -58,6 +59,7 @@ report_max_filter_value_bytes = 2048
 | `data_dir` | `LIWAN_DATA_DIR` | Platform data directory[^data-dir] |
 | `listen` | `LIWAN_LISTEN` | `0.0.0.0:9042` |
 | `disable_favicons` | `LIWAN_DISABLE_FAVICONS` | `false` |
+| `session_duration` | `LIWAN_SESSION_DURATION` | `14 days` |
 | `trusted_headers` | `LIWAN_TRUSTED_HEADERS` | `X-Forwarded-For` |
 | `trusted_proxies` | `LIWAN_TRUSTED_PROXIES` | `127.0.0.1/8`, `::1/128` |
 | `visitor_group_rotation_hour` | `LIWAN_VISITOR_GROUP_ROTATION_HOUR` | `4` |

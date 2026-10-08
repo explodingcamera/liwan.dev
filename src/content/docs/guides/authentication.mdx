@@ -61,9 +61,15 @@ The issuer must provide OpenID Connect discovery and ID tokens. Issuer URLs must
 
 ## Sign-In Options
 
-- **Allow new users** creates a liwan user after the first successful provider sign-in. New users receive the regular User role and have no project assignments.
+- **Allow new users** creates a liwan user after the first successful provider sign-in. New users receive the regular User role.
 - **Reuse provider session** lets the provider use an existing browser session. Disable it to request the provider's sign-in prompt each time.
 - **Display name** controls the label shown on the external sign-in button.
+
+## Team Assignment
+
+In liwan 1.8 and later, you can select a **Default team** for new SSO accounts under **Settings > Authentication**. For Microsoft Entra ID, you can also map group IDs to teams. For generic OpenID Connect, specify the ID token group claim and map its values to teams. If the provider requires an additional scope to include that claim, enter it in **Additional scopes**. Google supports the default team but does not provide group claims for mapping.
+
+Teams are assigned only when an account is created. Changes to provider groups or mappings do not update existing users. If group mappings are configured but the provider omits groups or reports an incomplete list, account creation fails instead of granting only some teams.
 
 When automatic user creation is disabled, only external identities that were previously created can sign in. liwan does not automatically link an external identity to a password-based user with the same name.
 
