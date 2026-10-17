@@ -2,8 +2,6 @@ import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
 import Caddyfile from "./src/assets/caddyfile.tmLanguage.json";
 
-import react from "@astrojs/react";
-
 const starlightConfig = starlight({
 	title: "liwan",
 	favicon: "/favicon.svg",
@@ -104,5 +102,5 @@ export default defineConfig({
 			langs: [Caddyfile as any],
 		},
 	},
-	integrations: [starlightConfig, react()],
+	integrations: [starlightConfig],
 });

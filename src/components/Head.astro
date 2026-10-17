@@ -3,30 +3,26 @@ import StarlightHead from "@astrojs/starlight/components/Head.astro";
 ---
 
 <meta property="og:image" content="/og-image.png" />
-<script is:inline>
-  window.liwanTransformEvent = (payload) => ({
-    ...payload,
-    properties: {
-      ...payload.properties,
-      device_theme: matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light",
-    },
-  });
-</script>
-<script
-  type="module"
-  is:inline
-  data-api="https://demo.liwan.dev/api/event"
-  data-entity="liwan.dev">
-  import { event } from "https://demo.liwan.dev/script.js";
+<script>
+  import { event, setProperties, trackPageviews } from "@liwan.dev/tracker";
+  import type { EventProperties } from "@liwan.dev/tracker";
 
-  const track = (name, properties) => {
-    void event(name, { properties }).catch(() => {});
+  const darkMode = matchMedia("(prefers-color-scheme: dark)");
+  const updateTheme = () => setProperties({ device_theme: darkMode.matches ? "dark" : "light" });
+  updateTheme();
+  darkMode.addEventListener("change", updateTheme);
+
+  const trackerOptions = { endpoint: "https://demo.liwan.dev/api/event", entity: "liwan.dev" };
+  trackPageviews(trackerOptions);
+
+  const track = (name: string, properties: EventProperties) => {
+    void event(name, { ...trackerOptions, properties }).catch(() => {});
   };
 
   document.addEventListener("click", (e) => {
     if (!(e.target instanceof Element)) return;
     const link = e.target.closest("a[href]");
-    if (!link) return;
+    if (!(link instanceof HTMLAnchorElement)) return;
 
     if (link.href === "https://demo.liwan.dev/p/liwan.dev") {
       track("open-demo", { placement: link.closest(".hero-images") ? "screenshot" : "hero" });
