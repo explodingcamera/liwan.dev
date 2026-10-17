@@ -2,34 +2,40 @@
 title: Installing liwan Using Docker
 ---
 
-To run liwan with Docker:
+import { Steps } from "@astrojs/starlight/components";
 
-```sh "127.0.0.1:9042" "https://a.example.com"
-docker run -d --name liwan \
-  -p 127.0.0.1:9042:9042 \
-  -v liwan-data:/data \
-  -e LIWAN_BASE_URL=https://a.example.com \
-  -e LIWAN_TRUSTED_PROXIES=172.17.0.0/16 \
-  ghcr.io/explodingcamera/liwan:1.7
-```
+<Steps>
 
-The important parts are:
+1. **Run liwan**
 
-- `-p 127.0.0.1:9042:9042` binds liwan to localhost on port `9042`.
-- `-v liwan-data:/data` stores liwan data in a persistent Docker volume.
-- Set `LIWAN_BASE_URL` to the instance's public URL.
-- `LIWAN_TRUSTED_PROXIES` allows a reverse proxy on the host to supply the client IP through Docker's bridge network.
+   ```sh
+   docker run -d --name liwan \
+     -p 127.0.0.1:9042:9042 \
+     -v liwan-data:/data \
+     -e LIWAN_BASE_URL=https://a.example.com \
+     -e LIWAN_TRUSTED_PROXIES='*' \
+     ghcr.io/explodingcamera/liwan:1.8
+   ```
 
-For a public instance, [add a reverse proxy for HTTPS and public routing](/guides/reverse-proxy/). Docker's default bridge network is commonly `172.17.0.0/16`, as shown above. Check the actual subnet with `docker network inspect bridge` and update `LIWAN_TRUSTED_PROXIES` when it differs. See the [trusted proxy guidance](/guides/reverse-proxy/#client-ip-headers).
+   - `LIWAN_BASE_URL` is your instance's public URL. Replace `https://a.example.com` with yours.
+   - `LIWAN_TRUSTED_PROXIES='*'` accepts forwarded client IPs from any connecting peer. See step 3 for when to restrict it.
 
-To view the logs (and find the setup URL), you can run:
+2. **Find the setup URL**
 
-```bash title="liwan"
-docker logs liwan
-```
+   Check the logs and open the setup URL to create your first user, project, and entity:
 
-```plaintext "http://localhost:9042/setup?t=1234567890" "liwan --help"
-It looks like you're running liwan for the first time!
-You can get started by visiting: http://localhost:9042/setup?t=1234567890
-To see all available commands, run `liwan --help`
-```
+   ```bash title="liwan"
+   docker logs liwan
+   ```
+
+   ```plaintext "http://localhost:9042/setup?t=1234567890" "liwan --help"
+   It looks like you're running liwan for the first time!
+   You can get started by visiting: http://localhost:9042/setup?t=1234567890
+   To see all available commands, run `liwan --help`
+   ```
+
+3. **Set up public access**
+
+   For a public instance, [add a reverse proxy for HTTPS and public routing](/guides/reverse-proxy/) and keep liwan's port inaccessible to the public. `*` trusts forwarded client IPs from any peer. Other containers on a shared Docker bridge can reach liwan directly, so use the proxy's address instead if they are not trusted. See the [trusted proxy guidance](/guides/reverse-proxy/#client-ip-headers).
+
+</Steps>

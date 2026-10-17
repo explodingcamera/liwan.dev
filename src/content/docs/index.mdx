@@ -4,8 +4,9 @@ description: Self-hosted, privacy-first web analytics with no tracking cookies o
 template: splash
 hero:
   tagline: |
-    Understand your traffic without sending analytics data to another company.
-    Run liwan as a single binary or Docker container, with no additional services to manage.
+    See your traffic in real time, and run everything as a single binary or Docker
+    container, with no additional services to manage.
+    <br />Fully open source, licensed under the Apache License 2.0.
   actions:
     - text: Get started
       link: /getting-started
@@ -17,55 +18,102 @@ hero:
       variant: minimal
 ---
 
-import { Card, CardGrid } from "@astrojs/starlight/components";
+import { CardGrid, LinkCard } from "@astrojs/starlight/components";
 import { Image } from "astro:assets";
+import { ChartNoAxesCombined, CodeXml, Server, ShieldCheck, SlidersHorizontal, UsersRound } from "lucide-astro";
+import DockerCommand from "../../components/DockerCommand.astro";
+import FeatureCard from "../../components/FeatureCard.astro";
 import img from "./../../assets/images/liwan-desktop-dark.png";
 import img2 from "./../../assets/images/liwan-desktop.png";
 
 <div className="hero-images">
   <a href="https://demo.liwan.dev/p/liwan.dev">
-    <img className="hero-image" src={img.src} alt="liwan dashboard" />
+    <Image
+      class="hero-image"
+      src={img}
+      alt="liwan dashboard in dark mode"
+      width={800}
+      widths={[400, 800, 1200]}
+      sizes="(max-width: 40rem) 100vw, 50vw"
+      format="png"
+    />
   </a>
   <a href="https://demo.liwan.dev/p/liwan.dev">
-    <img className="hero-image" src={img2.src} alt="liwan dashboard" />
+    <Image
+      class="hero-image"
+      src={img2}
+      alt="liwan dashboard in light mode"
+      width={800}
+      widths={[400, 800, 1200]}
+      sizes="(max-width: 40rem) 100vw, 50vw"
+      format="png"
+    />
   </a>
 </div>
 
+<section className="features">
+
+<div className="feature-intro">
+  Understanding your website shouldn't come at the expense of your visitors'
+  privacy. liwan gives you useful insights while keeping the data on your server.
+</div>
+
 <CardGrid>
-  <Card title="Understand your traffic">
+  <FeatureCard title="Understand your traffic">
+    <ChartNoAxesCombined slot="icon" aria-hidden="true" />
     <p>
       See your most-visited pages, traffic sources, and changes over time. The
-      dashboard updates automatically and filters bots by default.
+      dashboard updates in real time and filters bots by default.
     </p>
-  </Card>
-  <Card title="Easy to self-host">
+  </FeatureCard>
+  <FeatureCard title="Easy to self-host">
+    <Server slot="icon" aria-hidden="true" />
     <p>
-      Run liwan as a <b>single binary or Docker container</b>. The dashboard and
-      database are built in, with no additional services to manage.
+      Run liwan as a [single binary](/install/binary/) or
+      [Docker container](/install/docker/).
+      The dashboard and database are built in, with no additional services to manage.
     </p>
-  </Card>
-  <Card title="Privacy first">
+  </FeatureCard>
+  <FeatureCard title="Privacy first">
+    <ShieldCheck slot="icon" aria-hidden="true" />
     <p>
       No tracking cookies or cross-site tracking. <b>Your analytics data stays
-      on your server.</b> See [what liwan collects](/collected-data/).
+      on your server</b>, and raw IP addresses aren't recorded.
+      See [what liwan collects](/collected-data/).
     </p>
-  </Card>
-  <Card title="Collect only what you need">
+  </FeatureCard>
+  <FeatureCard title="Collect only what you need">
+    <SlidersHorizontal slot="icon" aria-hidden="true" />
     <p>
       Choose what to collect and how long to keep it. Configure location detail,
       campaign attribution, visitor grouping, and session metrics independently.
     </p>
-  </Card>
-  <Card title="Lightweight tracking">
+  </FeatureCard>
+  <FeatureCard title="Lightweight tracking">
+    <CodeXml slot="icon" aria-hidden="true" />
     <p>
-      Add a small tracking script with one line of HTML. It works with any
-      framework or CMS.
+      Add a small browser script with one line of HTML, or send events entirely
+      from your server. Use either approach with any framework or CMS.
     </p>
-  </Card>
-  <Card title="Single sign-on">
+  </FeatureCard>
+  <FeatureCard title="Single sign-on">
+    <UsersRound slot="icon" aria-hidden="true" />
     <p>
-      Manage accounts with Google Workspace, Microsoft Entra ID, or an OpenID
-      Connect provider such as Keycloak or Dex. [Configure SSO](/guides/authentication/).
+      Set up teams and [manage accounts](/guides/authentication/) with Google Workspace,
+      Microsoft Entra ID, or an OpenID Connect provider such as Keycloak or Dex.
     </p>
-  </Card>
+  </FeatureCard>
 </CardGrid>
+
+<div className="try-options">
+  <LinkCard title="Get the latest release" description="Download the latest liwan release from GitHub to run on your server." href="https://github.com/explodingcamera/liwan/releases/latest" />
+  <DockerCommand>
+
+```sh
+docker run -p 9042:9042 -v liwan-data:/data -e LIWAN_BASE_URL=http://localhost:9042 ghcr.io/explodingcamera/liwan:1.8
+```
+
+  </DockerCommand>
+</div>
+
+</section>

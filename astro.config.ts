@@ -44,6 +44,7 @@ const starlightConfig = starlight({
 	components: {
 		Footer: "./src/components/Footer.astro",
 		Head: "./src/components/Head.astro",
+		ThemeSelect: "./src/components/ThemeSelect.astro",
 	},
 	sidebar: [
 		{
@@ -78,8 +79,8 @@ const starlightConfig = starlight({
 		{
 			label: "Client Libraries",
 			items: [
-				{ label: "Browser tracker", link: "https://www.npmjs.com/package/liwan-tracker" },
-				{ label: "JavaScript API client", link: "https://www.npmjs.com/package/liwan-api" },
+				{ label: "Browser tracker", link: "https://www.npmjs.com/package/@liwan.dev/tracker" },
+				{ label: "JavaScript API client", link: "https://www.npmjs.com/package/@liwan.dev/api" },
 				{ label: "Rust API client", link: "https://crates.io/crates/liwan-api" },
 			],
 		},

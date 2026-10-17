@@ -8,6 +8,7 @@ import Pagination from "@astrojs/starlight/components/Pagination.astro";
 type Props = Parameters<typeof StarlightFooter>[0];
 
 const { entry } = Astro.locals.starlightRoute;
+const showBranding = entry.data.template !== "doc";
 ---
 
 <footer class="sl-flex">
@@ -18,29 +19,27 @@ const { entry } = Astro.locals.starlightRoute;
   <Pagination {...Astro.props} />
 
   <div class="imprint sl-flex">
-    {(entry.data.template !== "doc") && (
+    {showBranding && (
       <h2>
-        <Image src="/favicon.svg" alt="liwan logo" width="20" height="20" />
-        liwan - Self-hosted, privacy-first web analytics
+        <span class="brand">
+          <Image src="/favicon.svg" alt="liwan logo" width="20" height="20" />
+          liwan
+        </span>
+        <span class="tagline">Self-hosted, privacy-first web analytics</span>
       </h2>
-      <a target="_blank" href="mailto:hi@liwan.dev">
-        hi@liwan.dev
-      </a>
     )}
-    <div>
-      <a
-        target="_blank"
-        href="https://henrygressmann.de/impressum"
-      >
-        imprint
-      </a>
-      <span aria-hidden="true"> / </span>
-      <a
-        target="_blank"
-        href="https://henrygressmann.de/privacy"
-      >
-        privacy policy
-      </a>
+    <div class="contact-links">
+      {showBranding && (
+        <a href="mailto:hi@liwan.dev">hi@liwan.dev</a>
+      )}
+      <div class="legal-links">
+        <a target="_blank" href="https://henrygressmann.de/impressum">
+          imprint
+        </a>
+        <a target="_blank" href="https://henrygressmann.de/privacy">
+          privacy policy
+        </a>
+      </div>
     </div>
   </div>
 </footer>
@@ -69,8 +68,22 @@ const { entry } = Astro.locals.starlightRoute;
 
     h2 {
       display: flex;
-      align-items: center;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.25rem 0.75rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: baseline;
       gap: 0.3em;
+      white-space: nowrap;
+    }
+
+    .tagline {
+      color: var(--sl-color-text);
+      font-size: 1rem;
+      font-weight: 400;
     }
 
     a {
@@ -83,6 +96,18 @@ const { entry } = Astro.locals.starlightRoute;
   }
   .imprint :global(svg) {
     color: var(--sl-color-orange);
+  }
+  .contact-links {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+  }
+  .legal-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-inline-start: auto;
   }
   .kudos:hover {
     color: var(--sl-color-white);

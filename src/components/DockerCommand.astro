@@ -1,0 +1,34 @@
+---
+const command =
+	"docker run -p 9042:9042 -v liwan-data:/data -e LIWAN_BASE_URL=http://localhost:9042 ghcr.io/explodingcamera/liwan:1.8";
+---
+
+<div class="docker-code" data-copy-command data-command={command} role="button" tabindex="0" aria-label="Copy Docker run command" title="Copy Docker command">
+  <slot />
+  <span class="sr-only terminal-feedback" aria-live="polite"></span>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLDivElement>("[data-copy-command]").forEach((card) => {
+    const copy = async () => {
+      const command = card.dataset.command;
+      if (!command) return;
+      const feedback = card.querySelector(".terminal-feedback");
+      try {
+        await navigator.clipboard.writeText(command);
+        if (feedback) feedback.textContent = "Copied to clipboard";
+        card.title = "Copied";
+      } catch {
+        if (feedback) feedback.textContent = "Could not copy";
+        card.title = "Could not copy command";
+      }
+    };
+
+    card.addEventListener("click", () => void copy());
+    card.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      void copy();
+    });
+  });
+</script>

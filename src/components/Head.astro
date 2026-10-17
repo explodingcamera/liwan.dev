@@ -3,8 +3,44 @@ import StarlightHead from "@astrojs/starlight/components/Head.astro";
 ---
 
 <meta property="og:image" content="/og-image.png" />
+<script is:inline>
+  window.liwanTransformEvent = (payload) => ({
+    ...payload,
+    properties: {
+      ...payload.properties,
+      device_theme: matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light",
+    },
+  });
+</script>
 <script
   type="module"
-  data-entity="liwan.dev"
-  src="https://demo.liwan.dev/script.js"></script>
+  is:inline
+  data-api="https://demo.liwan.dev/api/event"
+  data-entity="liwan.dev">
+  import { event } from "https://demo.liwan.dev/script.js";
+
+  const track = (name, properties) => {
+    void event(name, { properties }).catch(() => {});
+  };
+
+  document.addEventListener("click", (e) => {
+    if (!(e.target instanceof Element)) return;
+    const link = e.target.closest("a[href]");
+    if (!link) return;
+
+    if (link.href === "https://demo.liwan.dev/p/liwan.dev") {
+      track("open-demo", { placement: link.closest(".hero-images") ? "screenshot" : "hero" });
+    } else if (link.href === "https://github.com/explodingcamera/liwan") {
+      track("open-github", {
+        placement: link.closest("header") ? "header" : link.closest(".mobile-preferences") ? "menu" : "content",
+      });
+    }
+  });
+
+  window.addEventListener("liwan:theme-switch", (e) => {
+    if (e instanceof CustomEvent && (e.detail === "light" || e.detail === "dark")) {
+      track("switch-theme", { theme: e.detail });
+    }
+  });
+</script>
 <StarlightHead {...Astro.props} />

@@ -30,6 +30,7 @@ The browser tracker can send:
 - **Screen width bucket**: a coarse bucket such as `SM`, `MD`, or `XL`.
 - **Orientation**: portrait or landscape.
 - **Event name**: `pageview` by default. Custom tracking code can send other event names.
+- **Custom properties**: optional event-specific and tracker-wide values supplied by your tracking code. Do not include personal data.
 - **Page exit**: a best-effort `exit: true` request when a tracked page becomes hidden.
 
 The exit request uses the same page context and updates the matching pageview instead of creating another pageview. Add `data-exit="false"` to the script element or pass `exit: false` to `trackPageviews` to disable it.
@@ -91,6 +92,6 @@ Run a dry run first to preview how many events will be affected.
 
 ## What liwan Does Not Store
 
-liwan does not store raw IP addresses, visitor-tracking cookies, cross-site visitor identifiers, full referrer paths, or normal page URL query strings and fragments. Enabled UTM values are stored separately.
+By default, liwan does not store raw IP addresses, visitor-tracking cookies, cross-site visitor identifiers, full referrer paths, or normal page URL query strings and fragments. Enabled UTM values are stored separately. Custom properties and event transformations can add data beyond these defaults.
 
 To reduce collection, disable unneeded fields, use shorter retention, and add drop rules.

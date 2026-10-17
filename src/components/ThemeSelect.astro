@@ -1,0 +1,62 @@
+---
+import { Moon, Sun } from "lucide-astro";
+---
+
+<button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode">
+  <Sun class="sun" aria-hidden="true" />
+  <Moon class="moon" aria-hidden="true" />
+</button>
+
+<style>
+  button {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--sl-color-white);
+    cursor: pointer;
+  }
+  button :global(svg) {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  .moon {
+    display: none;
+  }
+  :global(:root[data-theme="dark"]) .sun {
+    display: none;
+  }
+  :global(:root[data-theme="dark"]) .moon {
+    display: block;
+  }
+</style>
+
+<script>
+  const syncLabels = () => {
+    const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+      button.setAttribute("aria-label", `Switch to ${next} mode`);
+    });
+  };
+
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element) || !event.target.closest("[data-theme-toggle]")) return;
+    const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem("starlight-theme", next);
+    syncLabels();
+    window.dispatchEvent(new CustomEvent("liwan:theme-switch", { detail: next }));
+  });
+
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
+    if (localStorage.getItem("starlight-theme")) return;
+    document.documentElement.dataset.theme = event.matches ? "dark" : "light";
+    syncLabels();
+  });
+
+  syncLabels();
+  document.addEventListener("astro:page-load", syncLabels);
+</script>

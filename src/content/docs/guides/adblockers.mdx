@@ -2,9 +2,16 @@
 title: Ad Blockers
 ---
 
+import { Steps } from "@astrojs/starlight/components";
+
 Some visitors use content blockers that block analytics scripts by pattern, domain name, or request path. As a result, reported traffic may be lower than actual traffic.
 
-To reduce name-based blocking:
+<Steps>
 
-- **Use a neutral subdomain**: Names like `analytics.example.com` are more likely to match blocklists. A neutral name such as `a.example.com` or `liwan.example.com` may be less likely to be blocked.
-- **Use a first-party domain**: Host liwan under a subdomain of your site so the tracker uses a domain you control.
+1. Host liwan on your site's domain. Use a subdomain like `a.example.com`, or serve it under a path like `https://example.com/liwan` so tracker requests use the same origin as your site. For a path deployment, set [`base_url`](/reference/configuration/#configuration-options) to that full URL and forward the path without stripping the prefix. See the [reverse proxy guide](/guides/reverse-proxy/) for an HTTPS setup.
+
+2. If using a subdomain, choose a neutral name such as `a.example.com` or `liwan.example.com`. Names like `analytics.example.com` may match domain-based blocklists, even when hosted under your own site.
+
+3. Test with a blocker enabled. Reload your site with the browser's Network tab open and look for `script.js` and `/api/event`. A blocked script cannot send pageviews, while a blocked event request prevents the server from receiving them. Some visitors will still be uncounted because blockers can target request paths as well as domains.
+
+</Steps>

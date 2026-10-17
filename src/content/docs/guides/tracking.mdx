@@ -1,6 +1,6 @@
 ---
 title: Tracking Script
-description: Add the browser tracker and configure page-exit tracking.
+description: Add the browser tracker, send custom events, and configure properties and page exits.
 ---
 
 Add the script shown for your entity in the liwan dashboard:
@@ -13,7 +13,48 @@ Add the script shown for your entity in the liwan dashboard:
 ></script>
 ```
 
-The server-hosted script always matches the installed liwan version. If you use the `liwan-tracker` npm package, update it when you update the server.
+The server-hosted script always matches the installed liwan version. If you use the `@liwan.dev/tracker` npm package, update it when you update the server.
+
+## Custom Events and Properties
+
+Use the npm tracker to send an event with properties:
+
+```ts
+import { event, setProperties } from "@liwan.dev/tracker";
+
+setProperties({ plan: "pro" }); // Included on subsequent events and pageviews.
+await event("signup", { properties: { method: "email" } });
+setProperties({ plan: null }); // Remove the default after logout or a plan change.
+```
+
+Properties passed to `event()` override defaults. For the script-tag tracker, set defaults before loading the module so they apply to the first automatic pageview:
+
+```html
+<script>
+  window.liwanProperties = { plan: "pro" };
+</script>
+<script type="module" src="https://liwan.example.com/script.js" data-entity="example"></script>
+```
+
+For computed properties or other changes to outgoing events, define a synchronous transformer before loading the script:
+
+```html
+<script>
+  window.liwanTransformEvent = (payload) => ({
+    ...payload,
+    properties: {
+      ...payload.properties,
+      section: new URL(payload.url).pathname.split("/")[1] || "home",
+    },
+  });
+</script>
+```
+
+The transformer receives the normalized payload for pageviews and custom events. Its `name` identifies the event, and its URL has already been sanitized. It returns the payload to send. It does not run for page-exit signals. Do not add personal data or sensitive URL parameters. Server-side globals are shared across requests, so pass request-specific properties directly to `event()` rather than setting global defaults.
+
+Calling `trackPageviews()` more than once logs a message and ignores subsequent calls. Pageview tracking ignores navigations that only change the URL query or fragment.
+
+Property values may be strings, numbers, or booleans. Null and empty strings are omitted. Each event can have at most 30 properties, with keys up to 64 characters and values up to 255 characters.
 
 ## Page Exits
 
@@ -33,7 +74,7 @@ Disable the follow-up request in HTML:
 Or disable it with the npm tracker:
 
 ```ts
-import { trackPageviews } from "liwan-tracker";
+import { trackPageviews } from "@liwan.dev/tracker";
 
 trackPageviews({
   endpoint: "https://liwan.example.com/api/event",
